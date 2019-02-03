@@ -36,6 +36,7 @@ TRACK_1=1
 TRACK_WIN=2
 TILE_WATER=21
 TILE_CAVE=32
+TILE_LAVA=176
 TILE_WATER_CAVE_MOD=80
 HORIZON_COLOR=8
 PMEM_START_POINT_X=0
@@ -62,13 +63,13 @@ arrayToObject=(a)->
 	for i in *a
 		result[i]=true
 	result
-wall=arrayToObject({2,17,53,54,55,64,69,72,96,97,98,119,130,131,132,134,147,149,195,209,211,224,225,226,241,242})
+wall=arrayToObject({2,17,53,54,55,64,69,72,96,97,98,119,130,131,132,134,147,149,195,196,209,211,224,225,226,227,241,242})
 slopeUp=arrayToObject({1,20,48,99,133,144,146,193,208,211,240})
 slopeDown=arrayToObject({3,22,49,100,135,145,148,192,210,214,243})
-water=arrayToObject({TILE_WATER,5,6,20,21,22,22,36,37,38,39,40,88,104,120,136,144,145,160,161,176,177})
-cave=arrayToObject({TILE_CAVE,48,49,65,66,67,68,71,80,82,84,85,86,87,101,103,115,116,117,118,146,148,151,152,153,155,165,168,169,170,185,186})
+water=arrayToObject({TILE_WATER,5,6,20,21,22,22,36,37,38,39,40,88,104,120,136,144,145,160,161,TILE_LAVA,177})
+cave=arrayToObject({TILE_CAVE,48,49,59,60,65,66,67,68,71,80,82,84,85,86,87,101,103,115,116,117,118,146,148,151,165,169,170,182,185,186})
 destructible=arrayToObject({130,131,132})
-lava=arrayToObject({176,177,192,193})
+lava=arrayToObject({TILE_LAVA,177,192,193})
 waterLeftFrames={
 	{5,0,0}
 	{5,1,0}
@@ -512,7 +513,9 @@ rectangleSwims=(r,ratio)->
 							return true
 	false
 fillMapGap=(x,y)->
-	if isWater(x,y-1)
+	if lava[getTile(x,y-1)]
+		mset(x,y,TILE_LAVA)
+	else if isWater(x,y-1)
 		mset(x,y,TILE_WATER)
 	else if isCaveBelow(x,y-1)
 		mset(x,y,TILE_CAVE)
@@ -797,6 +800,11 @@ main=->
 					fillMapGap(x,y)
 					with Gem!
 						\moveToTile(x,y)
+				when 63
+					fillMapGap(x,y)
+					with Spider!
+						\moveToTile(x,y)
+						.spdY=-.5
 				when 73
 					fillMapGap(x,y)
 					with FatPotion!
@@ -1411,6 +1419,7 @@ class Flyer extends Enemy
 		@deathTime=nil
 		@lastHp=@hp
 		@flashStart=0
+		@flashColorIndex=6
 	getTileId:=>
 		if @deathTime==nil
 			if @spdX~=0 or @spdY~=0
@@ -1457,14 +1466,19 @@ class Flyer extends Enemy
 	tweakPalette:=>
 		if @deathTime==nil
 			if frameTime-@flashStart<100
-				setPaletteIndex(6,15)
+				setPaletteIndex(@flashColorIndex,15)
 		else
 			setPaletteIndex(15,getFrame(.1,flamePaletteIndexes,@deathTime))
 	untweakPalette:=>
-		setPaletteIndex(6)
+		setPaletteIndex(@flashColorIndex)
 		setPaletteIndex(15)
 	shouldRemove:=>
 		@deathTime!=nil and getFrameLooped(.1,@deathFrames,@deathTime)
+class Spider extends Flyer
+	new:=>
+		super!
+		@flyFrames={63,327}
+		@flashColorIndex=2
 class Flyer2 extends Enemy
 	new:=>
 		super!
@@ -1671,7 +1685,7 @@ class Swimmer extends Enemy
 		if @deathTime==nil
 			if @spdX~=0 or @spdY~=0
 				return getFrame(.2,@swimFrames)
-			return 320
+			return 15
 		getFrame(.1,@deathFrames,@deathTime)
 	getFlip:=>
 		if @deathTime==nil
@@ -1771,7 +1785,7 @@ class FatPotion extends Collectible
 	getTileId:=>
 		73
 	onCollected:=>
-		addScore(75)
+		todor.isLavaProof=true
 class KaporAbductsLudmilla extends Enemy
 	new:=>
 		super!
@@ -2175,6 +2189,7 @@ class Todor extends Sprite
 		@layers=3
 		@holdStart=nil
 		@shotConstructor=TodorShotNormal
+		@isLavaProof=false
 	getTileId:(layer)=>
 		switch layer
 			when 1
@@ -2303,7 +2318,7 @@ class Todor extends Sprite
 			@spdX=min(1,max(-1,@spdX))
 			@spdY=min(1,max(-1,@spdY))
 			@holdStart=nil
-			if lava[getTileAtCoord(@x,@y)]
+			if lava[getTileAtCoord(@x,@y)] and not @isLavaProof
 				sfxSplashBody!
 				@hp-=.1
 		else
