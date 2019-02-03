@@ -41,9 +41,8 @@ HORIZON_COLOR=8
 PMEM_START_POINT_X=0
 PMEM_START_POINT_Y=1
 frameTime=time!
-_={}
-_.msg=''
-_.coverSkipped=false
+msg=''
+coverSkipped=false
 sprites={}
 decors={}
 shots={}
@@ -141,7 +140,7 @@ mushroomCloudFrames={277,278,279,295,280,296,281,297}
 popFrames={261,262,263,264,265}
 defaultPalette={0x140c1c,0x442434,0x30346d,0x4e4a4f,0x854c30,0x346524,0xd04648,0x757161,0x597dce,0xd27d2c,0x8595a1,0x6daa2c,0xd2aa99,0x6dc2ca,0xdad45e,0xdeeed6}
 grayscalePalette={0x000000,0x1e1e1e,0x373737,0x4b4b4b,0x565656,0x636363,0x717171,0x757575,0x7b7b7b,0x898989,0x929292,0xa0a0a0,0xb1b1b1,0xcdcdcd,0xe9e9e9,0xffffff}
-_.cover={
+cover={
 	{
 		x1: 37
 		y1: 49
@@ -185,7 +184,7 @@ _.cover={
 		values: "0,iyo,fjd9fk,c2ydayry8,1p5yhp8g,ksb4n6hk3g,iqewx,6fhb1ahhc,1y759ts,2rdupktwjq,f4npc,cdprr7xs,2ots233z7k,3ah5559yjj,gozhkg8uws,fs8scn3,5jjcjze540,8lugwe4hkw,ltrq9nzugv,jef7s62tf3,1cbtaa58ht,lzqonubrwg,m4rc7cn5kv,gmnaz5we0d,70jx62lm,m65bex7xts,m66hnfwooz,gdakb29r7f,7w4almm,b33j9ym000,m670by2k1s,m65bexr5z3,7w4g7wf,b33j9ynrb3,m672jxbcao,m672hpeupr,m5t1kgaz27,3i9z7if3,0"
 	}
 }
-_.coverColors={4,8,15,12,14,11}
+coverColors={4,8,15,12,14,11}
 instanceOf=(klass,instance)->
 	if klass==nil or instance==nil or not is_object(instance)
 		return false
@@ -206,10 +205,10 @@ getFrame=(sec,frames,t,idOffset=0)->
 	id=getFrameId(sec,#frames,t)
 	r=frames[id+1]
 	if type(r)=='number'
-		-- _.msg..="\n#{r}"
+		-- msg..="\n#{r}"
 		return r+idOffset
 	else
-		-- _.msg..="\n#{r[1]} #{r[2]} #{r[3]}"
+		-- msg..="\n#{r[1]} #{r[2]} #{r[3]}"
 		return r[1]+idOffset,r[2],r[3]
 direction=(n)->
 	if n==0
@@ -593,21 +592,21 @@ drawMap=->
 		1,
 		remap
 	)
-_.prepareCover=->
+prepareCover=->
 	local zeroOnes,n
-	for i,o in ipairs(_.cover)
+	for i,o in ipairs(cover)
 		zeroOnes={}
 		for b36 in string.gmatch(o.values,"([^,]+)")
 			n=tonumber(b36,36)
 			for p=0,50
 				insert(zeroOnes,if math.pow(2,p)&n>0 then 1 else 0)
-		o.color=_.coverColors[i]
+		o.color=coverColors[i]
 		o.values=zeroOnes
-_.drawCover=->
+drawCover=->
 	local i
 	cls!
 	circ(cam.width/3,cam.height/3,cam.height*.8,1)
-	for o in *_.cover
+	for o in *cover
 		i=0
 		for y=o.y1,o.y2
 			for x=o.x1,o.x2
@@ -651,9 +650,9 @@ handleInput=->
 	btn7\check!
 	if btn4.isOn and btn5.isOn and btn6.isOn and btn7.isOn
 		exit()
-	if not _.coverSkipped
+	if not coverSkipped
 		if btn4.released or btn5.released
-			_.coverSkipped=true
+			coverSkipped=true
 	elseif startTime==nil
 		if btn6.released
 			pmem(PMEM_START_POINT_X,0)
@@ -671,7 +670,7 @@ main=->
 	btn5=ButtonState(5)
 	btn6=ButtonState(6)
 	btn7=ButtonState(7)
-	_.prepareCover!
+	prepareCover!
 	cam=Camera!
 	todor=Todor!
 	cam.follow=todor
@@ -2372,11 +2371,11 @@ class Todor extends Sprite
 	untweakPalette:=>
 		setPaletteIndex(4)
 TIC=->
-	--_.msg..="\n\n\n\n#{tonumber('4l',36)}\n"
+	--msg..="\n\n\n\n#{tonumber('4l',36)}\n"
 	frameTime=time!
 	handleInput!
-	if not _.coverSkipped
-		_.drawCover!
+	if not coverSkipped
+		drawCover!
 	elseif startTime==nil
 		cam\update!
 		drawMap!
@@ -2396,11 +2395,11 @@ TIC=->
 		scoreToPrint="#{score}"
 		w=print(scoreToPrint,cam.width,cam.height,0,true,2)
 		print(scoreToPrint,cam.width-w-8,cam.height-2*8,15,true,2)
-	print(_.msg)
-	_.msg=''
+	print(msg)
+	msg=''
 OVR=->
 	setPalette(defaultPalette)
-	if _.coverSkipped and startTime==nil
+	if coverSkipped and startTime==nil
 		rollColors!
 		map(
 			0,
@@ -2444,7 +2443,7 @@ OVR=->
 		resetPaletteIndices!
 SCN=(line)->
 	if line==0
-		if _.coverSkipped and (startTime==nil or todor.isDead)
+		if coverSkipped and (startTime==nil or todor.isDead)
 			setPalette(grayscalePalette)
 		else
 			setPalette(defaultPalette)
