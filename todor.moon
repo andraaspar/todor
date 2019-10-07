@@ -800,6 +800,11 @@ main=->
 					fillMapGap(x,y)
 					with Gem!
 						\moveToTile(x,y)
+				when 62
+					fillMapGap(x,y)
+					with Flyer2!
+						\moveToTile(x,y)
+						.spdX=.5
 				when 63
 					fillMapGap(x,y)
 					with Spider!
