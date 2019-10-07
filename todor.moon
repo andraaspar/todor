@@ -813,6 +813,10 @@ main=->
 					fillMapGap(x,y)
 					with ThinPotion!
 						\moveToTile(x,y)
+				when 79
+					fillMapGap(x,y)
+					with Sarcophagus!
+						\moveToTile(x,y)
 				when 115
 					with TorchLight!
 						\moveToTile(x,y-1)
@@ -1279,6 +1283,7 @@ class Walker extends Enemy
 		@deathTime=nil
 		@lastHp=@hp
 		@flashStart=0
+		@flashColorIndex=6
 	getTileId:=>
 		if @deathTime==nil
 			if @spdX~=0
@@ -1332,11 +1337,11 @@ class Walker extends Enemy
 	tweakPalette:=>
 		if @deathTime==nil
 			if frameTime-@flashStart<100
-				setPaletteIndex(6,15)
+				setPaletteIndex(@flashColorIndex,15)
 		else
 			setPaletteIndex(15,getFrame(.1,flamePaletteIndexes,@deathTime))
 	untweakPalette:=>
-		setPaletteIndex(6)
+		setPaletteIndex(@flashColorIndex)
 		setPaletteIndex(15)
 	shouldRemove:=>
 		@deathTime!=nil and getFrameLooped(.1,@deathFrames,@deathTime)
@@ -1348,6 +1353,7 @@ class GrassHead extends Walker
 		super!
 		@walkFrames={417,418,417,419}
 		@standFrame=416
+		@flashColorIndex=11
 class Walker2 extends Enemy
 	new:=>
 		super!
@@ -1786,6 +1792,37 @@ class FatPotion extends Collectible
 		73
 	onCollected:=>
 		todor.isLavaProof=true
+class Sarcophagus extends Decor
+	new:=>
+		super!
+		@openedTime=nil
+		@releasedTime=nil
+	hitsTodor:=>
+		if not todor.isDead
+			rectangleHitsRectangle(@getRectangle!,todor\getRectangle!)
+	getRectangle:=>
+		Rectangle(
+			Vector(@x-3,@y-4),
+			Vector(@x+4,@y+4))
+	think:=>
+		if @openedTime==nil
+			if @hitsTodor!
+				@openedTime=frameTime
+		else if @releasedTime==nil and @openedTime+1000<=frameTime
+			@releasedTime=frameTime
+			with Mummy!
+				.x=@x
+				.y=@y
+				.spdX=if @x<todor.x then .5 else -.5
+	getTileId:=>
+		if @releasedTime==nil then 79 else 328
+class Mummy extends Walker
+	new:=>
+		super!
+		@walkFrames={312,313,312,311}
+		@standFrame=314
+		@deathFrames={315,316,317,318,319}
+		@flashColorIndex=10
 class KaporAbductsLudmilla extends Enemy
 	new:=>
 		super!
