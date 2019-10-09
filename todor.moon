@@ -861,9 +861,10 @@ main=->
 					startPoints[x..'-'..y]=true
 					if startPointX==x and startPointY==y
 						todor\moveToTile(x,y)
-	-- music(TRACK_1,0,0,true)
+	music(TRACK_1,0,0,true)
 start=->
 	startTime=frameTime
+	music!
 class ButtonState
 	new:(num)=>
 		@num=num
