@@ -7,7 +7,7 @@ moon=require('moon')
 import is_object from moon
 import floor, ceil, min, max, abs, random from math
 import insert, remove from table
-export todor,kapor,cam,slammed,kaporCaughtTime,gotLudmillaTime,startTime,btn4,btn5,btn6,btn7,defaultStartPointX,defaultStartPointY
+export todor,kapor,cam,slammed,kaporCaughtTime,gotLudmillaTime,startTime,btn4,btn5,btn6,btn7
 export *
 TILE_COUNT_X=30
 TILE_COUNT_Y=17
@@ -616,6 +616,22 @@ drawCover=->
 				i+=1
 				if o.values[i]==1
 					pix(x,y,o.color)
+	print('Press            to start',8,8)
+	drawFireButton(42,7)
+drawFireButton=(x,y)->
+	spr(331,x,y,0) -- Z
+	spr(351,x+8,y,0) -- /
+	spr(330,x+8*2,y,0) -- Y
+	spr(351,x+8*3,y,0) -- /
+	spr(329,x+8*4,y,0) -- A
+drawAltButton=(x,y)->
+	spr(333,x,y,0) -- X
+	spr(351,x+8,y,0) -- /
+	spr(332,x+8*2,y,0) -- B
+drawResetButton=(x,y)->
+	spr(335,x,y,0) -- A
+	spr(351,x+8,y,0) -- /
+	spr(334,x+8*2,y,0) -- X
 updateSprites=->
 	for i,sprite in ipairs(sprites)
 		sprite\checkActive!
@@ -693,8 +709,6 @@ main=->
 					turnTiles[x..'-'..y]=true
 				when 10
 					fillMapGap(x,y)
-					defaultStartPointX=x
-					defaultStartPointY=y
 					if todor.x==0
 						todor\moveToTile(x,y)
 				when 11
@@ -913,36 +927,24 @@ class Camera
 		-(@getTopLeftX!%8)
 	getMapY:=>
 		-(@getTopLeftY!%8)
-class Sprite
+class FloatingSprite
 	new:=>
 		@x=0
 		@y=0
-		@spdX=0
-		@spdY=0
 		@colorKey=0
-		@onGround=false
 		@isActive=true
 		@layers=1
 		insert(sprites,self)
-	moveToTile:(x,y)=>
-		@x=x*8+4
-		@y=y*8+4
 	getTopLeftX:(layer)=>
 		@x-@getWidth(layer)*@getScale(layer)/2
 	getTopLeftY:(layer)=>
 		@y-@getHeight(layer)*@getScale(layer)/2
 	getCamX:(layer)=>
-		round(@getTopLeftX(layer)-cam\getTopLeftX!)
+		@getTopLeftX(layer)
 	getCamY:(layer)=>
-		round(@getTopLeftY(layer)-cam\getTopLeftY!)
-	getRectangle:=>
-		Rectangle(
-			Vector(@x-1,@y-1),
-			Vector(@x+1,@y+1))
+		@getTopLeftY(layer)
 	checkActive:=>
-		@isActive=rectangleHitsRectangle(
-			@getRectangle!,
-			cam\getRectangle(cam.width/2))
+		return
 	getWidth:=>8
 	getHeight:=>8
 	getScale:=>1
@@ -959,6 +961,31 @@ class Sprite
 				ceil(@getHeight(layer)/8))
 		if @untweakPalette
 			@untweakPalette!
+	shouldRemove:=>
+		false
+	remove:=>
+		sprites=removeItem(sprites,self)
+class Sprite extends FloatingSprite
+	new:=>
+		super!
+		@spdX=0
+		@spdY=0
+		@onGround=false
+	moveToTile:(x,y)=>
+		@x=x*8+4
+		@y=y*8+4
+	getCamX:(layer)=>
+		round(@getTopLeftX(layer)-cam\getTopLeftX!)
+	getCamY:(layer)=>
+		round(@getTopLeftY(layer)-cam\getTopLeftY!)
+	getRectangle:=>
+		Rectangle(
+			Vector(@x-1,@y-1),
+			Vector(@x+1,@y+1))
+	checkActive:=>
+		@isActive=rectangleHitsRectangle(
+			@getRectangle!,
+			cam\getRectangle(cam.width/2))
 	applyGravity:=>
 		@spdY+=GRAVITY
 	canWalk:=>
@@ -998,10 +1025,6 @@ class Sprite
 			@y+=@spdY
 		else
 			@spdY=0
-	shouldRemove:=>
-		false
-	remove:=>
-		sprites=removeItem(sprites,self)
 class Decor extends Sprite
 	new:=>
 		super!
@@ -2470,6 +2493,12 @@ OVR=->
 			nil
 		)
 		resetPaletteIndices!
+		if startPointX==0 and startPointY==0
+			print('Press it again to start',58,118)
+		else
+			print('Press it again to start here',44,113)
+			print('or        to reset',74,123)
+			drawResetButton(89,122)
 	elseif todor.isDead
 		rollColors!
 		map(
@@ -2484,6 +2513,8 @@ OVR=->
 			nil
 		)
 		resetPaletteIndices!
+		print('Press        to try again',58,118)
+		drawAltButton(92,117)
 	elseif gotLudmillaTime!=nil
 		rollColors!
 		map(
