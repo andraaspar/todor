@@ -60,6 +60,7 @@ startPoints={}
 startPointX=pmem(PMEM_START_POINT_X)
 startPointY=pmem(PMEM_START_POINT_Y)
 score=0
+killedAnyone=false
 arrayToObject=(a)->
 	result={}
 	for i in *a
@@ -1378,6 +1379,7 @@ class Walker extends Enemy
 				@hp=0
 		if @hp<=0 and @deathTime==nil
 			@deathTime=frameTime
+			killedAnyone=true
 			sfxBoomExplosion!
 	tweakPalette:=>
 		if @deathTime==nil
@@ -1449,6 +1451,7 @@ class Walker2 extends Enemy
 				@spdX*=-1
 		if @hp<=0 and @deathTime==nil
 			@deathTime=frameTime
+			killedAnyone=true
 			sfxKaboomExplosion!
 	tweakPalette:=>
 		if @deathTime==nil
@@ -1513,6 +1516,7 @@ class Flyer extends Enemy
 				@spdY*=-1
 		if @hp<=0 and @deathTime==nil
 			@deathTime=frameTime
+			killedAnyone=true
 			sfxBoomExplosion!
 	tweakPalette:=>
 		if @deathTime==nil
@@ -1588,6 +1592,7 @@ class Flyer2 extends Enemy
 				@spdY*=-1
 		if @hp<=0 and @deathTime==nil
 			@deathTime=frameTime
+			killedAnyone=true
 			sfxBoomExplosion!
 	tweakPalette:=>
 		if @deathTime==nil
@@ -1656,6 +1661,7 @@ class Fairy extends Enemy
 				@spdY*=-1
 		if @hp<=0 and @deathTime==nil
 			@deathTime=frameTime
+			killedAnyone=true
 			sfxBoomExplosion!
 	tweakPalette:=>
 		if @deathTime==nil
@@ -1773,6 +1779,7 @@ class Swimmer extends Enemy
 				@spdY*=-1
 		if @hp<=0 and @deathTime==nil
 			@deathTime=frameTime
+			killedAnyone=true
 			sfxBoomExplosion!
 	tweakPalette:=>
 		if @deathTime==nil
@@ -2012,6 +2019,7 @@ class KaporHoldsLudmilla extends Enemy
 					@spdX*=-1
 			if @hp<=0 and @deathTime==nil
 				@deathTime=frameTime
+				killedAnyone=true
 				sfxKaboomExplosion!
 				@releaseLudmilla!
 		else
@@ -2148,6 +2156,7 @@ class Hilda extends Enemy
 					@spdX*=-1
 			if @hp<=0 and @deathTime==nil
 				@deathTime=frameTime
+				killedAnyone=true
 				sfxKaboomExplosion!
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
@@ -2476,9 +2485,11 @@ TIC=->
 	handleInput!
 	if not coverSkipped
 		drawCover!
+		setBorderColorIndex(0)
 	elseif startTime==nil
 		cam\update!
 		drawMap!
+		setBorderColorIndex(0)
 	else
 		updateSprites!
 		cam\update!
@@ -2503,6 +2514,8 @@ TIC=->
 			spr(73,cam.width - 16,8,0)
 		if todor.isMightyStart!=nil
 			spr(74,cam.width - 24,8,0)
+		if not killedAnyone
+			spr(350,8,8,0)
 	print(msg)
 	msg=''
 OVR=->
