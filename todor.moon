@@ -41,6 +41,8 @@ TILE_WATER_CAVE_MOD=80
 HORIZON_COLOR=8
 PMEM_START_POINT_X=0
 PMEM_START_POINT_Y=1
+PMEM_IS_LAVA_PROOF=2
+PMEM_IS_MIGHTY=3
 frameTime=time!
 msg=''
 coverSkipped=false
@@ -217,6 +219,12 @@ direction=(n)->
 	n/abs(n)
 decrease=(n,maxAmount)->
 	n-direction(n)*min(maxAmount,abs(n))
+shouldFlash=(t)->
+	if t==nil
+		return false
+	local e
+	e=frameTime-t
+	e<600 and e>=0 and getFrameId(.1,2,t)==1
 isWaterfall=(tile,x,y)->
 	tileAbove=mget(x,y-1)
 	tileBelow=mget(x,y+1)
@@ -332,6 +340,9 @@ remap=(tile,x,y)->
 		when 180
 			if x==startPointX and y==startPointY
 				return 181
+		when 197
+			if x==startPointX and y==startPointY
+				return 198
 		when 183
 			if mget(x+1,y-1)==166
 				return tile,1
@@ -670,14 +681,16 @@ handleInput=->
 	if btn4.isOn and btn5.isOn and btn6.isOn and btn7.isOn
 		exit()
 	if not coverSkipped
-		if btn4.released or btn5.released
+		if btn4.released
 			coverSkipped=true
 	elseif startTime==nil
 		if btn6.released
 			pmem(PMEM_START_POINT_X,0)
 			pmem(PMEM_START_POINT_Y,0)
+			pmem(PMEM_IS_LAVA_PROOF,0)
+			pmem(PMEM_IS_MIGHTY,0)
 			reset()
-		if btn4.released or btn5.released
+		if btn4.released
 			start!
 	else
 		if todor.isDead or gotLudmillaTime!=nil
@@ -840,6 +853,10 @@ main=->
 					with TorchLight!
 						\moveToTile(x,y-1)
 				when 180
+					startPoints[x..'-'..y]=true
+					if startPointX==x and startPointY==y
+						todor\moveToTile(x,y)
+				when 197
 					startPoints[x..'-'..y]=true
 					if startPointX==x and startPointY==y
 						todor\moveToTile(x,y)
@@ -1811,6 +1828,7 @@ class ThinPotion extends Collectible
 	getTileId:=>
 		74
 	onCollected:=>
+		todor.isMightyStart=frameTime
 		todor.shotConstructor=TodorShotNoFall
 class FatPotion extends Collectible
 	new:=>
@@ -1819,7 +1837,7 @@ class FatPotion extends Collectible
 	getTileId:=>
 		73
 	onCollected:=>
-		todor.isLavaProof=true
+		todor.isLavaProofStart=frameTime
 class Sarcophagus extends Decor
 	new:=>
 		super!
@@ -2253,8 +2271,8 @@ class Todor extends Sprite
 		@isDead=false
 		@layers=3
 		@holdStart=nil
-		@shotConstructor=TodorShotNormal
-		@isLavaProof=false
+		@isLavaProofStart=(if pmem(PMEM_IS_LAVA_PROOF)==1 then 0 else nil)
+		@isMightyStart=(if pmem(PMEM_IS_MIGHTY)==1 then 0 else nil)
 	getTileId:(layer)=>
 		switch layer
 			when 1
@@ -2365,6 +2383,8 @@ class Todor extends Sprite
 				startPointY=tileY
 				pmem(PMEM_START_POINT_X,tileX)
 				pmem(PMEM_START_POINT_Y,tileY)
+				pmem(PMEM_IS_LAVA_PROOF,if todor.isLavaProofStart!=nil then 1 else 0)
+				pmem(PMEM_IS_MIGHTY,if todor.isMightyStart!=nil then 1 else 0)
 		if @swims
 			if btn(0)
 				@spdY-=.1
@@ -2383,7 +2403,7 @@ class Todor extends Sprite
 			@spdX=min(1,max(-1,@spdX))
 			@spdY=min(1,max(-1,@spdY))
 			@holdStart=nil
-			if lava[getTileAtCoord(@x,@y)] and not @isLavaProof
+			if lava[getTileAtCoord(@x,@y)] and @isLavaProofStart==nil
 				sfxSplashBody!
 				@hp-=.1
 		else
@@ -2409,7 +2429,7 @@ class Todor extends Sprite
 							if frameTime-@holdStart<500
 								spdMulti=if @facingRight then
 									1 else -1
-								with @shotConstructor!
+								with (if todor.isMightyStart==nil then TodorShotNormal else TodorShotNoFall)!
 									.x=@x
 									.y=@y
 									.spdX=@spdX+2*spdMulti
@@ -2470,11 +2490,19 @@ TIC=->
 		setPaletteIndex(15)
 		if todor.isDead or frameTime-todor.flashStart<100
 			setBorderColorIndex(6)
+		elseif shouldFlash(todor.isLavaProofStart)
+			setBorderColorIndex(15)
+		elseif shouldFlash(todor.isMightyStart)
+			setBorderColorIndex(15)
 		else
 			setBorderColorIndex(0)
 		scoreToPrint="#{score}"
 		w=print(scoreToPrint,cam.width,cam.height,0,true,2)
 		print(scoreToPrint,cam.width-w-8,cam.height-2*8,15,true,2)
+		if todor.isLavaProofStart!=nil
+			spr(73,cam.width - 16,8,0)
+		if todor.isMightyStart!=nil
+			spr(74,cam.width - 24,8,0)
 	print(msg)
 	msg=''
 OVR=->
