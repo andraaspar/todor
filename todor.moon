@@ -819,6 +819,7 @@ handleInput=->
 		if btn2.isOn and btn3.isOn
 			writeBoard(PMEM_BOARD_NORMAL_NAMES_START,PMEM_BOARD_NORMAL_SCORES_START,makeDefaultBoard())
 			writeBoard(PMEM_BOARD_PURE_NAMES_START,PMEM_BOARD_PURE_SCORES_START,makeDefaultBoard())
+			reset!
 	elseif startTime==nil
 		if btn6.released
 			pmem(PMEM_START_POINT_X,0)
