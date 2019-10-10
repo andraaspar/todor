@@ -43,9 +43,10 @@ PMEM_START_POINT_X=0
 PMEM_START_POINT_Y=1
 PMEM_IS_LAVA_PROOF=2
 PMEM_IS_MIGHTY=3
+PMEM_SKIP_START=4
 frameTime=time!
 msg=''
-coverSkipped=false
+coverSkipped=if pmem(PMEM_SKIP_START)==1 then true else false
 sprites={}
 decors={}
 shots={}
@@ -199,6 +200,41 @@ removeItem=(list,item)->
 	[i for i in *list when i~=item]
 round=(n)->
 	if n>0 then floor(n+.5) else ceil(n-.5)
+stringToNumber=(s)->
+	local c,n
+	n=0
+	for i=1,math.min(5,string.len(s))
+		c=string.byte(s,i)
+		if c>=48 and c<=57
+			c-=47
+		elseif c >= 65 and c<=90
+			c-=54
+		elseif c==45
+			c=37
+		elseif c==46
+			c=38
+		else
+			c=0
+		n+=c<<((i-1)*6)
+	n
+numberToString=(n)->
+	local c,s,n2
+	s=''
+	for i=1,5
+		n2=n>>((i-1)*6)
+		c=n2&63
+		if c>=1 and c<=10
+			c+=47
+		elseif c>=11 and c<=36
+			c+=54
+		elseif c==37
+			c=45
+		elseif c==38
+			c=46
+		else
+			c=32
+		s..=string.char(c)
+	s
 getFrameId=(sec,count,t=0)->
 	floor((frameTime-t)/(sec*1000)%count)
 getFrameIdLooped=(sec,count,t=0)->
@@ -690,14 +726,16 @@ handleInput=->
 			pmem(PMEM_START_POINT_Y,0)
 			pmem(PMEM_IS_LAVA_PROOF,0)
 			pmem(PMEM_IS_MIGHTY,0)
-			reset()
+			pmem(PMEM_SKIP_START,1)
+			reset!
 		if btn4.released
 			start!
 	else
 		if todor.isDead or gotLudmillaTime!=nil
 			if btn5.released
-				reset()
+				reset!
 main=->
+	pmem(PMEM_SKIP_START,0)
 	music!
 	btn4=ButtonState(4)
 	btn5=ButtonState(5)
@@ -2536,9 +2574,11 @@ OVR=->
 		)
 		resetPaletteIndices!
 		if startPointX==0 and startPointY==0
-			print('Press it again to start',58,118)
+			print('Press            again to start',43,118)
+			drawFireButton(76,117)
 		else
-			print('Press it again to start here',44,113)
+			print('Press            again to start here',29,113)
+			drawFireButton(63,112)
 			print('or        to reset',74,123)
 			drawResetButton(89,122)
 	elseif todor.isDead
