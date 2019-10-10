@@ -5,9 +5,9 @@
 -- saveid: todor
 moon=require('moon')
 import is_object from moon
-import floor, ceil, min, max, abs, random from math
-import insert, remove from table
-export todor,kapor,cam,slammed,kaporCaughtTime,gotLudmillaTime,startTime,btn4,btn5,btn6,btn7
+import floor,ceil,min,max,abs,random from math
+import insert,remove,sort from table
+export todor,kapor,cam,slammed,kaporCaughtTime,gotLudmillaTime,startTime,btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7
 export *
 TILE_COUNT_X=30
 TILE_COUNT_Y=17
@@ -44,6 +44,10 @@ PMEM_START_POINT_Y=1
 PMEM_IS_LAVA_PROOF=2
 PMEM_IS_MIGHTY=3
 PMEM_SKIP_START=4
+PMEM_BOARD_NORMAL_NAMES_START=5
+PMEM_BOARD_NORMAL_SCORES_START=15
+PMEM_BOARD_PURE_NAMES_START=25
+PMEM_BOARD_PURE_SCORES_START=35
 frameTime=time!
 msg=''
 coverSkipped=if pmem(PMEM_SKIP_START)==1 then true else false
@@ -200,6 +204,9 @@ removeItem=(list,item)->
 	[i for i in *list when i~=item]
 round=(n)->
 	if n>0 then floor(n+.5) else ceil(n-.5)
+leftPad=(s,len,char=' ')->
+	s=s..''
+	string.rep(char,len-#s)..s
 stringToNumber=(s)->
 	local c,n
 	n=0
@@ -214,7 +221,7 @@ stringToNumber=(s)->
 		elseif c==46
 			c=38
 		else
-			c=0
+			c=39
 		n+=c<<((i-1)*6)
 	n
 numberToString=(n)->
@@ -231,10 +238,66 @@ numberToString=(n)->
 			c=45
 		elseif c==38
 			c=46
-		else
+		elseif c==39
 			c=32
-		s..=string.char(c)
+		else
+			c=0
+		if c>0
+			s..=string.char(c)
 	s
+makeDefaultBoardEntry=(i)->
+	{
+		name:'+PAR+'
+		score:55-i*5
+	}
+makeDefaultBoard=()->
+	local r,i
+	r={}
+	for i=1,10
+		insert(r,makeDefaultBoardEntry(i))
+	r
+readBoard=(namesStart,scoresStart)->
+	local i,r,name
+	r={}
+	for i=1,10
+		name=numberToString(pmem(namesStart+i-1))
+		if name==''
+			insert(r,makeDefaultBoardEntry(i))
+		else
+			insert(r,{
+				name:name
+				score:pmem(scoresStart+i-1)
+			})
+	r
+writeBoard=(namesStart,scoresStart,board)->
+	local i,item
+	board=[item for item in *board[1,10]]
+	for i=1,10
+		item=board[i]
+		if item.name=='+PAR+'
+			pmem(namesStart+i-1,0)
+			pmem(scoresStart+i-1,0)
+		else
+			pmem(namesStart+i-1,stringToNumber(item.name))
+			pmem(scoresStart+i-1,item.score)
+addToBoard=()->
+	local board,boardScoresStart,boardNamesStart
+	if killedAnyone
+		board=boardNormal
+		boardNamesStart=PMEM_BOARD_NORMAL_NAMES_START
+		boardScoresStart=PMEM_BOARD_NORMAL_SCORES_START
+	else
+		boardNamesStart=PMEM_BOARD_PURE_NAMES_START
+		boardScoresStart=PMEM_BOARD_PURE_SCORES_START
+		board=boardPure
+	insert(board,{
+		name:'TODOR'
+		score:score
+	})
+	sort(board,(a,b)->a.score>b.score)
+	writeBoard(boardNamesStart,boardScoresStart,board)
+boardNormal=readBoard(PMEM_BOARD_NORMAL_NAMES_START,PMEM_BOARD_NORMAL_SCORES_START)
+boardPure=readBoard(PMEM_BOARD_PURE_NAMES_START,PMEM_BOARD_PURE_SCORES_START)
 getFrameId=(sec,count,t=0)->
 	floor((frameTime-t)/(sec*1000)%count)
 getFrameIdLooped=(sec,count,t=0)->
@@ -666,6 +729,8 @@ drawCover=->
 					pix(x,y,o.color)
 	print('Press            to start',8,8)
 	drawFireButton(42,7)
+	print('or        for scores',8,20)
+	drawScoreButton(24,19)
 drawFireButton=(x,y)->
 	spr(331,x,y,0) -- Z
 	spr(351,x+8,y,0) -- /
@@ -680,6 +745,33 @@ drawResetButton=(x,y)->
 	spr(335,x,y,0) -- A
 	spr(351,x+8,y,0) -- /
 	spr(334,x+8*2,y,0) -- X
+drawScoreButton=(x,y)->
+	spr(349,x,y,0) -- S
+	spr(351,x+8,y,0) -- /
+	spr(348,x+8*2,y,0) -- Y
+drawBoard=(x,board,isPure)->
+	local color
+	if isPure
+		spr(350,x,7,0)
+		print('   No Kill Scores',x,8)
+	else
+		print('High Scores',x+12,8)
+	for i,item in ipairs(board)
+		color=switch i
+			when 1
+				15
+			when 2
+				10
+			when 3
+				9
+			else
+				7
+		print("#{leftPad(i,2)}. #{item.name} #{leftPad(item.score,3)}",x+2,12+i*9,color,true)
+drawBoards=()->
+	cls!
+	drawBoard(24,boardNormal)
+	drawBoard(cam.width/2+8,boardPure,true)
+	print('Press left + right to reset',48,120)
 updateSprites=->
 	for i,sprite in ipairs(sprites)
 		sprite\checkActive!
@@ -711,6 +803,10 @@ setPalette=(palette)->
 	for i=0,15
 		setPaletteColor(i,palette[i+1])
 handleInput=->
+	btn0\check!
+	btn1\check!
+	btn2\check!
+	btn3\check!
 	btn4\check!
 	btn5\check!
 	btn6\check!
@@ -720,6 +816,9 @@ handleInput=->
 	if not coverSkipped
 		if btn4.released
 			coverSkipped=true
+		if btn2.isOn and btn3.isOn
+			writeBoard(PMEM_BOARD_NORMAL_NAMES_START,PMEM_BOARD_NORMAL_SCORES_START,makeDefaultBoard())
+			writeBoard(PMEM_BOARD_PURE_NAMES_START,PMEM_BOARD_PURE_SCORES_START,makeDefaultBoard())
 	elseif startTime==nil
 		if btn6.released
 			pmem(PMEM_START_POINT_X,0)
@@ -733,10 +832,15 @@ handleInput=->
 	else
 		if todor.isDead or gotLudmillaTime!=nil
 			if btn5.released
+				addToBoard!
 				reset!
 main=->
 	pmem(PMEM_SKIP_START,0)
 	music!
+	btn0=ButtonState(0)
+	btn1=ButtonState(1)
+	btn2=ButtonState(2)
+	btn3=ButtonState(3)
 	btn4=ButtonState(4)
 	btn5=ButtonState(5)
 	btn6=ButtonState(6)
@@ -2434,19 +2538,19 @@ class Todor extends Sprite
 				pmem(PMEM_IS_LAVA_PROOF,if todor.isLavaProofStart!=nil then 1 else 0)
 				pmem(PMEM_IS_MIGHTY,if todor.isMightyStart!=nil then 1 else 0)
 		if @swims
-			if btn(0)
+			if btn0.isOn
 				@spdY-=.1
-			if btn(1)
+			if btn1.isOn
 				@spdY+=.1
-			if not btn(0) and not btn(1)
+			if not btn0.isOn and not btn1.isOn
 				@spdY=decrease(@spdY,.1)
-			if btn(2)
+			if btn2.isOn
 				@spdX-=.1
 				@facingRight=false
-			if btn(3)
+			if btn3.isOn
 				@spdX+=.1
 				@facingRight=true
-			if not btn(2) and not btn(3)
+			if not btn2.isOn and not btn3.isOn
 				@spdX=decrease(@spdX,.1)
 			@spdX=min(1,max(-1,@spdX))
 			@spdY=min(1,max(-1,@spdY))
@@ -2455,17 +2559,17 @@ class Todor extends Sprite
 				sfxSplashBody!
 				@hp-=.1
 		else
-			if btn(0)
+			if btn0.isOn
 				if @onGround
 					@spdY=-2
 					sfxJump!
-			if btn(2)
+			if btn2.isOn
 				@spdX=-1
 				@facingRight=false
-			if btn(3)
+			if btn3.isOn
 				@spdX=1
 				@facingRight=true
-			if not btn(2) and not btn(3)
+			if not btn2.isOn and not btn3.isOn
 				@spdX=0
 			if btn4.changed
 				if @blowFireTime==nil
@@ -2523,7 +2627,10 @@ TIC=->
 	frameTime=time!
 	handleInput!
 	if not coverSkipped
-		drawCover!
+		if btn7.isOn
+			drawBoards!
+		else
+			drawCover!
 		setBorderColorIndex(0)
 	elseif startTime==nil
 		cam\update!
