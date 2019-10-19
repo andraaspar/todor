@@ -7,7 +7,7 @@ moon=require('moon')
 import is_object from moon
 import floor,ceil,min,max,abs,random from math
 import insert,remove,sort from table
-export todor,kapor,cam,slammed,kaporCaughtTime,gotLudmillaTime,startTime,btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7
+export todor,kapor,cam,slammed,kaporCaughtTime,gotLudmillaTime,startTime,btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,canEnter
 export *
 TILE_COUNT_X=30
 TILE_COUNT_Y=17
@@ -48,8 +48,8 @@ PMEM_BOARD_NORMAL_NAMES_START=5
 PMEM_BOARD_NORMAL_SCORES_START=15
 PMEM_BOARD_PURE_NAMES_START=25
 PMEM_BOARD_PURE_SCORES_START=35
+PMEM_LAST_NAME=45
 frameTime=time!
-msg=''
 coverSkipped=if pmem(PMEM_SKIP_START)==1 then true else false
 sprites={}
 decors={}
@@ -65,6 +65,49 @@ startPoints={}
 startPointX=pmem(PMEM_START_POINT_X)
 startPointY=pmem(PMEM_START_POINT_Y)
 score=0
+stringToNumber=(s)->
+	local c,n
+	n=0
+	for i=1,math.min(5,string.len(s))
+		c=string.byte(s,i)
+		if c>=48 and c<=57
+			c-=47
+		elseif c >= 65 and c<=90
+			c-=54
+		elseif c==45
+			c=37
+		elseif c==46
+			c=38
+		else
+			c=39
+		n+=c<<((i-1)*6)
+	n
+numberToString=(n)->
+	local c,s,n2
+	s=''
+	for i=1,5
+		n2=n>>((i-1)*6)
+		c=n2&63
+		if c>=1 and c<=10
+			c+=47
+		elseif c>=11 and c<=36
+			c+=54
+		elseif c==37
+			c=45
+		elseif c==38
+			c=46
+		elseif c==39
+			c=32
+		else
+			c=0
+		if c>0
+			s..=string.char(c)
+	s
+name=if pmem(PMEM_LAST_NAME)>0
+	numberToString(pmem(PMEM_LAST_NAME))
+else
+	'TODOR'
+charI=1
 killedAnyone=false
 arrayToObject=(a)->
 	result={}
@@ -194,12 +237,6 @@ cover={
 	}
 }
 coverColors={4,8,15,12,14,11}
-instanceOf=(klass,instance)->
-	if klass==nil or instance==nil or not is_object(instance)
-		return false
-	if instance.__class==klass
-		return true
-	instanceOf(klass,instance.__class.__parent)
 removeItem=(list,item)->
 	[i for i in *list when i~=item]
 round=(n)->
@@ -207,44 +244,14 @@ round=(n)->
 leftPad=(s,len,char=' ')->
 	s=s..''
 	string.rep(char,len-#s)..s
-stringToNumber=(s)->
-	local c,n
-	n=0
-	for i=1,math.min(5,string.len(s))
-		c=string.byte(s,i)
-		if c>=48 and c<=57
-			c-=47
-		elseif c >= 65 and c<=90
-			c-=54
-		elseif c==45
-			c=37
-		elseif c==46
-			c=38
-		else
-			c=39
-		n+=c<<((i-1)*6)
-	n
-numberToString=(n)->
-	local c,s,n2
-	s=''
-	for i=1,5
-		n2=n>>((i-1)*6)
-		c=n2&63
-		if c>=1 and c<=10
-			c+=47
-		elseif c>=11 and c<=36
-			c+=54
-		elseif c==37
-			c=45
-		elseif c==38
-			c=46
-		elseif c==39
-			c=32
-		else
-			c=0
-		if c>0
-			s..=string.char(c)
-	s
+shiftChar=(s,charI,n)->
+	local char,num
+	char=string.sub(s,charI,charI)
+	num=(stringToNumber(char)+n)%39
+	if num<1
+		num=39
+	char=string.sub(numberToString(num),1,1)
+	string.sub(s,1,charI-1)..char..string.sub(s,charI+1)
 makeDefaultBoardEntry=(i)->
 	{
 		name:'+PAR+'
@@ -291,11 +298,18 @@ addToBoard=()->
 		boardScoresStart=PMEM_BOARD_PURE_SCORES_START
 		board=boardPure
 	insert(board,{
-		name:'TODOR'
+		name:name
 		score:score
 	})
 	sort(board,(a,b)->a.score>b.score)
 	writeBoard(boardNamesStart,boardScoresStart,board)
+madeHighScore=()->
+	local boardScoresStart
+	if killedAnyone
+		boardScoresStart=PMEM_BOARD_NORMAL_SCORES_START
+	else
+		boardScoresStart=PMEM_BOARD_PURE_SCORES_START
+	score>pmem(boardScoresStart+9)
 boardNormal=readBoard(PMEM_BOARD_NORMAL_NAMES_START,PMEM_BOARD_NORMAL_SCORES_START)
 boardPure=readBoard(PMEM_BOARD_PURE_NAMES_START,PMEM_BOARD_PURE_SCORES_START)
 getFrameId=(sec,count,t=0)->
@@ -307,12 +321,7 @@ getFrameLooped=(sec,frames,t)->
 getFrame=(sec,frames,t,idOffset=0)->
 	id=getFrameId(sec,#frames,t)
 	r=frames[id+1]
-	if type(r)=='number'
-		-- msg..="\n#{r}"
-		return r+idOffset
-	else
-		-- msg..="\n#{r[1]} #{r[2]} #{r[3]}"
-		return r[1]+idOffset,r[2],r[3]
+	if type(r)=='number' then r+idOffset else r[1]+idOffset,r[2],r[3]
 direction=(n)->
 	if n==0
 		return 0
@@ -772,6 +781,12 @@ drawBoards=()->
 	drawBoard(24,boardNormal)
 	drawBoard(cam.width/2+8,boardPure,true)
 	print('Press left + right to reset',48,120)
+drawInput=()->
+	cls!
+	print('Enter your name:',74,10)
+	print(name,80,30,15,true,2)
+	spr(347,83+12*5,31,0,1)
+	rect(82+12*(charI-1),42,10,2,6)
 updateSprites=->
 	for i,sprite in ipairs(sprites)
 		sprite\checkActive!
@@ -832,9 +847,26 @@ handleInput=->
 			start!
 	else
 		if todor.isDead or gotLudmillaTime!=nil
-			if btn5.released
-				addToBoard!
-				reset!
+			if canEnter
+				if btn2.pressed
+					charI=math.max(1,charI-1)
+				elseif btn3.pressed or btn4.pressed
+					charI=math.min(6,charI+1)
+				if charI==6
+					if btn4.released
+						addToBoard!
+						pmem(PMEM_LAST_NAME,stringToNumber(name))
+						reset!
+				else
+					if btn0.pressed
+						name=shiftChar(name,charI,1)
+					elseif btn1.pressed
+						name=shiftChar(name,charI,-1)
+			elseif btn5.released
+				if madeHighScore!
+					canEnter=true
+				else
+					reset!
 main=->
 	pmem(PMEM_SKIP_START,0)
 	music!
@@ -2624,7 +2656,6 @@ class Todor extends Sprite
 	untweakPalette:=>
 		setPaletteIndex(4)
 TIC=->
-	--msg..="\n\n\n\n#{tonumber('4l',36)}\n"
 	frameTime=time!
 	handleInput!
 	if not coverSkipped
@@ -2637,6 +2668,8 @@ TIC=->
 		cam\update!
 		drawMap!
 		setBorderColorIndex(0)
+	elseif canEnter
+		drawInput!
 	else
 		updateSprites!
 		cam\update!
@@ -2663,8 +2696,6 @@ TIC=->
 			spr(74,cam.width - 24,8,0)
 		if not killedAnyone
 			spr(350,8,8,0)
-	print(msg)
-	msg=''
 OVR=->
 	setPalette(defaultPalette)
 	if coverSkipped and startTime==nil
@@ -2689,6 +2720,8 @@ OVR=->
 			drawFireButton(63,112)
 			print('or        to reset',74,123)
 			drawResetButton(89,122)
+	elseif canEnter
+		nil
 	elseif todor.isDead
 		rollColors!
 		map(
@@ -2703,8 +2736,8 @@ OVR=->
 			nil
 		)
 		resetPaletteIndices!
-		print('Press        to try again',58,118)
-		drawAltButton(92,117)
+		print('Press        to continue',60,118)
+		drawAltButton(94,117)
 	elseif gotLudmillaTime!=nil
 		rollColors!
 		map(
@@ -2721,7 +2754,7 @@ OVR=->
 		resetPaletteIndices!
 SCN=(line)->
 	if line==0
-		if coverSkipped and (startTime==nil or todor.isDead)
+		if coverSkipped and (startTime==nil or todor.isDead) and not canEnter
 			setPalette(grayscalePalette)
 		else
 			setPalette(defaultPalette)
