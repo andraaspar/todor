@@ -11,10 +11,10 @@ export todor,kapor,cam,slammed,kaporCaughtTime,gotLudmillaTime,startTime,btn0,bt
 export *
 TILE_COUNT_X=30
 TILE_COUNT_Y=17
-CH_BASS=0
-CH_HI=1
-CH_DRUM=2
-CH_SFX=3
+CH_FALL=0
+CH_HIT=1
+CH_SPEAK=2
+CH_COLLECT=3
 GRAVITY=.1
 SFX_SILENCE=-1
 SFX_THROW=0
@@ -212,7 +212,7 @@ cover={
 		y1: 4
 		x2: 234
 		y2: 132
-		values: "0,0,0,e7,0,0,2sxs,0,0,4ekjy8,0,0,dx5ulxq8,0,0,awv1jdb0g0,6,0,0,2yo,0,0,4fi9kw,0,0,ry9rfzeo,0,0,ksb4n6hjpc,7,0,0,p34,0,0,hma7sw,0,0,30qlbgv0g,0,0,0,3j,0,0,8wvls0,0,0,oyem6hx4w,0,0,5hzn7bzoxs,1kw,0,0,4ftjog,0,0,68hssn0u8,0,0,rmfkrnk0,sg,0,gmnawxzmyo,27wr2n,0,0,9cqlw6k8w,0,0,3tvghkw,1idanqfwg,0,5ip2po95hc,b33jb2m4xs,am,0,348zli60s,20ecqo,0,61h8uoutc,2d18g95a8,0,1jwjivytc,ksb4p4epyw,ap,gmnawxzmyo,s27ycnjz,u1eyo,0,32hvaio0,s5o4m6ww,0,e0v171fk,4ulsp0wa9v,5c,lzyktbyrr4,gnte8okl6n,7ib67,0,3y73oqo,okszotz4,0,dmb1hu68,2flmtovw1s,o,ocxai5wxs,li0a8vrqym,y0q8,0,4u77c,wb8i3y6,0,dlbxlyps,dili3b7f9c,3,64zgm58g,2m8cth46ri,b6zk,0,lhmoxcobgm,1pjcg9y8,0,dlbo0f0g,bm3jsj76n3,3,0,1bcskgo20u,jqcw,0,58gbkzn5s0,1jfmmpuo,0,aej5n96dq8,j00a3usw0,f,0,noeaxcjsu,13ea8,0,1adps9ga2o,65667wog,0,2lwzek8su8,6b4ofob0g,1o,0,nhd8nnake,9d5hi,0,1bxtam56v4,ojyyvz94,0,1b5ad437cw,35skxj1a8,68,0,ds4c8d03em,yyl8h,0,1b5qdqzqps,5gfirrfwe,0,nkfaflds0,3tqmgps,16o,0,1nmkhtzy,dbgidc,0,lttlse0z5s,1dvxwqtywz,0,17u0xuzt34,2pzs,pa8,0,xv6m,7w4g7wg,0,33cvdvk0,0,0,gacw7gsq9s,6,0,0,5j4u,0,0,3gd4r9c,0,0,64zgm58g,0,0,0,s,0,0,26nsw,0,0,2mphemtc,0,0,0,c,0,1ds,mh34,0,zg24n4,1r4zlse8,0,2rodjjpdkw,1zmc6ww,8,6h9fjdiww,2u6p6g3jzs,mh34,0,1z0svfo,59eytj9d,0,5jiw7jz7k0,ddztb0,o,e4u2xpreo,11eyfp24n0,34dfk,zik0zk,2s5uuhe1l5,c9yx8g00,1dvxwqtyww,j2wubadr0g,6nqlvf,2fawcayg48,3itpin56o,9cr3rd6am,1vf9c,bs1iq3d5hc,amnoxs8w,59eyt9mo,1dvyyhaqyo,b0r9feul1c,zik108,2y0dk30opk,bfrlezpb7k,1dvxwt3cou,1vf9c,5xuyudquio,3hwngie8,3i9z7lkw,c1e983jk74,jklzfkuryp,6nq96v,awv1jdb0w,aejnyt17go,ax7v8qkww,18y68,bz3xiz7xs0,gmnawy1284,3i9z7if4,68xmsledc0,8h1g,pa8,5kbtuszz0g,5bs5g,1z141z4,0,25ubo1s,jef6qfnksg,0,shdduqbr4,0,mfi8,dv9g7d5qtc,68hphedms,z9odzb4,0,33t31smxs,572s5smjgg,0,lzyktego3k,1h9u1hd,27wykg,70jyf0u8,s0,5gh01iozk,0,17jmo,0,1s,3geoxz4,0,0,11igpjbzls,0,0,0,1eg,0,0,flv5s,0,0,d5jf162o,0,7w4g7wg,0,c,0,1,0,0,5zpc,0,0,13ydj40,0,0,cgzh6phq8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13ydj4,1kw,0,1k4fnc6ps,27wr28,0,0,0,0,0,d9jgjvoyyo,3cefseaga,0,cxm4hfrzls,7dh8k2dd1u,11x,erm082fm68,1uil7nefu2,qmwxu,0,es3npxsmbk,22twmyfu2,0,uk8yp2sxs,4stutar6fr,hf,erm082fm68,7e2cumw2i2,2ekh8q,0,es43vi5khs,6r77lm6cq,0,cxm4hfrzls,7dh8k295b6,11x,erm082fm68,8rxyfbwjop,1am3pg,0,0,0,0,0,15kk5rk,0,0,7dhb6rfsao,0,0,es3jlyh69s,xmy,0,0,2mhzplc,0,0,9z0osxxfy8,0,0,erpii1n4lc,xmy,0,0,2mhzpjk,0,0,7dhb6mfzls,0,0,erpii1n4lc,xmx"
+		values: "0,0,0,e7,0,0,2sxs,0,0,4ekjy8,0,0,dx5ulxq8,0,0,awv1jdb0g0,6,0,0,2yo,0,0,4fi9kw,0,0,ry9rfzeo,0,0,ksb4n6hjpc,7,0,0,p34,0,0,hma7sw,0,0,30qlbgv0g,0,0,0,3j,0,0,8wvls0,0,0,oyem6hx4w,0,0,5hzn7bzoxs,1kw,0,0,4ftjog,0,0,68hssn0u8,0,0,rmfkrnk0,sg,0,gmnawxzmyo,27wr2n,0,0,9cqlw6k8w,0,0,3tvghkw,1idanqfwg,0,5ip2po95hc,b33jb2m4xs,am,0,348zli60s,20ecqo,0,61h8uoutc,2d18g95a8,0,1jwjivytc,ksb4p4epyw,ap,gmnawxzmyo,s27ycnjz,u1eyo,0,32hvaio0,s5o4m6ww,0,e0v171fk,4ulsp0wa9v,5c,lzyktbyrr4,gnte8okl6n,7ib67,0,3y73oqo,okszotz4,0,dmb1hu68,2flmtovw1s,o,ocxai5wxs,li0a8vrqym,y0q8,0,4u77c,wb8i3y6,0,dlbxlyps,dili3b7f9c,3,64zgm58g,2m8cth46ri,b6zk,0,lhmoxcobgm,1pjcg9y8,0,dlbo0f0g,bm3jsj76n3,3,0,1bcskgo20u,jqcw,0,58gbkzn5s0,1jfmmpuo,0,aej5n96dq8,j00a3usw0,f,0,noeaxcjsu,13ea8,0,1adps9ga2o,65667wog,0,2lwzek8su8,6b4ofob0g,1o,0,nhd8nnake,9d5hi,0,1bxtam56v4,ojyyvz94,0,1b5ad437cw,35skxj1a8,68,0,ds4c8d03em,yyl8h,0,1b5qdqzqps,5gfirrfwe,0,nkfaflds0,3tqmgps,16o,0,1nmkhtzy,dbgidc,0,lttlse0z5s,1dvxwqtywz,0,17u0xuzt34,2pzs,pa8,0,xv6m,7w4g7wg,0,33cvdvk0,0,0,gacw7gsq9s,6,0,0,5j4u,0,0,3gd4r9c,0,0,64zgm58g,0,0,0,s,0,0,26nsw,0,0,2mphemtc,0,0,0,c,0,1ds,mh34,0,zg24n4,1r4zlse8,0,2rodjjpdkw,1zmc6ww,8,6h9fjdiww,2u6p6g3jzs,mh34,0,1z0svfo,59eytj9d,0,5jiw7jz7k0,ddztb0,o,e4u2xpreo,11eyfp24n0,34dfk,zik0zk,2s5uuhe1l5,c9yx8g00,1dvxwqtyww,j2wubadr0g,6nqlvf,2fawcayg48,3itpin56o,9cr3rd6am,1vf9c,bs1iq3d5hc,amnoxs8w,59eyt9mo,1dvyyhaqyo,b0r9feul1c,zik108,2y0dk30opk,bfrlezpb7k,1dvxwt3cou,1vf9c,5xuyudquio,3hwngie8,3i9z7lkw,c1e983jk74,jklzfkuryp,6nq96v,awv1jdb0w,aejnyt17go,ax7v8qkww,18y68,bz3xiz7xs0,gmnawy1284,3i9z7if4,68xmsledc0,8h1g,pa8,5kbtuszz0g,5bs5g,1z141z4,0,25ubo1s,jef6qfnksg,0,shdduqbr4,0,mfi8,dv9g7d5qtc,68hphedms,z9odzb4,0,33t31smxs,572s5smjgg,0,lzyktego3k,1h9u1hd,27wykg,70jyf0u8,s0,5gh01iozk,0,17jmo,0,1s,3geoxz4,0,0,11igpjbzls,0,0,0,1eg,0,0,flv5s,0,0,d5jf162o,0,7w4g7wg,0,c,0,1,0,0,5zpc,0,0,13ydj40,0,0,cgzh6phq8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13ydj4,1kw,0,1k4fnc6ps,27wr28,0,0,0,0,0,d9jgjvoyyo,3cefseaga,0,cxm4hfrzls,7dh8k2dd1u,11x,erm082fm68,1uil7nefu2,qmwxu,0,es3npxsmbk,22twmyfu2,0,uk8yp2sxs,4stutar6fr,hf,erm082fm68,7e2cumw2i2,2ekh8q,0,es43vi5khs,6r77lm6cq,0,cxm4hfrzls,7dh8k295b6,11x,erm082fm68,8rxyfbwjop,1am3pg,0,0,0,0,0,15kk5rk,0,0,7dhb6rfsao,0,0,es3jlyh69s,xmy,0,0,2mhzplc,0,0,9z0osxxfy8,19m1vk,0,erpii1n4lc,8bazs4ksq,0,0,2mhzpjk,191,0,7dhb6mfzls,2ei51c,0,erpii1n4lc,3kexexhs9"
 	}
 	{
 		x1: 24
@@ -665,39 +665,39 @@ damageWalls=(wallsHit,damage)->
 silence=(channel)->
 	sfx(SFX_SILENCE,0,-1,channel)
 sfxThrow=->
-	sfx(SFX_THROW,6*12,-1,CH_SFX)
+	sfx(SFX_THROW,6*12,-1,CH_SPEAK)
 sfxBoomExplosion=->
-	sfx(SFX_BOOM,0,-1,CH_DRUM,15,-1)
+	sfx(SFX_BOOM,0,-1,CH_HIT,15,-1)
 sfxBoomHit=->
-	sfx(SFX_BOOM,0,-1,CH_DRUM)
+	sfx(SFX_BOOM,0,-1,CH_HIT)
 sfxJump=->
-	sfx(SFX_JUMP,3*12+2,-1,CH_SFX)
+	sfx(SFX_JUMP,3*12+2,-1,CH_FALL)
 sfxBlow=->
-	sfx(SFX_BLOW,3*12,-1,CH_SFX)
+	sfx(SFX_BLOW,3*12,-1,CH_SPEAK)
 sfxHold=->
-	sfx(SFX_HOLD,4*12+5,-1,CH_SFX)
+	sfx(SFX_HOLD,4*12+5,-1,CH_SPEAK)
 sfxSplashBody=->
-	sfx(SFX_SPLASH,7*12,-1,CH_DRUM)
+	sfx(SFX_SPLASH,7*12,-1,CH_SPEAK)
 sfxSplashBullet=->
-	sfx(SFX_SPLASH,7*12+4,-1,CH_DRUM)
+	sfx(SFX_SPLASH,7*12+4,-1,CH_HIT)
 sfxOhnoEnemy=->
-	sfx(SFX_OHNO,6*12,-1,CH_SFX)
+	sfx(SFX_OHNO,6*12,-1,CH_SPEAK)
 sfxOhnoLudmilla=(tone)->
-	sfx(SFX_OHNO,6*12+5+tone,-1,CH_SFX)
+	sfx(SFX_OHNO,6*12+5+tone,-1,CH_HIT)
 sfxSnap=->
-	sfx(SFX_KABOOM,6*12,-1,CH_DRUM,10,3)
+	sfx(SFX_KABOOM,6*12,-1,CH_HIT,10,3)
 sfxKaboomExplosion=->
-	sfx(SFX_KABOOM,0,-1,CH_DRUM,15,-1)
+	sfx(SFX_KABOOM,0,-1,CH_HIT,15,-1)
 sfxZap=->
-	sfx(SFX_KABOOM,4*12,-1,DRUM,10,-1)
+	sfx(SFX_KABOOM,4*12,-1,CH_HIT,10,-1)
 sfxSlam=->
-	sfx(SFX_KABOOM,0,-1,CH_DRUM,15,1)
+	sfx(SFX_KABOOM,0,-1,CH_HIT,15,1)
 sfxHit=->
-	sfx(SFX_HIT,3*12,-1,CH_DRUM)
+	sfx(SFX_HIT,3*12,-1,CH_HIT)
 sfxCollectGem=->
-	sfx(SFX_COLLECT,6*12,-1,CH_SFX)
+	sfx(SFX_COLLECT,6*12,-1,CH_COLLECT)
 sfxCollectLife=->
-	sfx(SFX_COLLECT2,3*12,-1,CH_SFX)
+	sfx(SFX_COLLECT2,3*12,-1,CH_COLLECT)
 rollColors=(start=0)->
 	for i=1,14
 		setPaletteIndex(i,getFrame(.1,colorRoll,colorRollStart[i]*100+start))
@@ -2645,7 +2645,7 @@ class Todor extends Sprite
 		@lastHp=@hp
 		if @hp<=0
 			@isDead=true
-			silence(CH_SFX)
+			silence(CH_SPEAK)
 			music(TRACK_DEATH,0,0,false)
 			killFlames!
 	tweakPalette:=>
