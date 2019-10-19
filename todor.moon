@@ -304,12 +304,12 @@ addToBoard=()->
 	sort(board,(a,b)->a.score>b.score)
 	writeBoard(boardNamesStart,boardScoresStart,board)
 madeHighScore=()->
-	local boardScoresStart
+	local board
 	if killedAnyone
-		boardScoresStart=PMEM_BOARD_NORMAL_SCORES_START
+		board=boardNormal
 	else
-		boardScoresStart=PMEM_BOARD_PURE_SCORES_START
-	score>pmem(boardScoresStart+9)
+		board=boardPure
+	score>board[#board].score
 boardNormal=readBoard(PMEM_BOARD_NORMAL_NAMES_START,PMEM_BOARD_NORMAL_SCORES_START)
 boardPure=readBoard(PMEM_BOARD_PURE_NAMES_START,PMEM_BOARD_PURE_SCORES_START)
 getFrameId=(sec,count,t=0)->
