@@ -2013,6 +2013,7 @@ class ThinPotion extends Collectible
 	onCollected:=>
 		todor.isMightyStart=frameTime
 		todor.shotConstructor=TodorShotNoFall
+		sfxCollectLife!
 class FatPotion extends Collectible
 	new:=>
 		super!
@@ -2021,6 +2022,7 @@ class FatPotion extends Collectible
 		73
 	onCollected:=>
 		todor.isLavaProofStart=frameTime
+		sfxCollectLife!
 class Sarcophagus extends Decor
 	new:=>
 		super!
