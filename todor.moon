@@ -66,7 +66,6 @@ startPointX=pmem(PMEM_START_POINT_X)
 startPointY=pmem(PMEM_START_POINT_Y)
 score=0
 stringToNumber=(s)->
-	local c,n
 	n=0
 	for i=1,math.min(5,string.len(s))
 		c=string.byte(s,i)
@@ -83,7 +82,6 @@ stringToNumber=(s)->
 		n+=c<<((i-1)*6)
 	n
 numberToString=(n)->
-	local c,s,n2
 	s=''
 	for i=1,5
 		n2=n>>((i-1)*6)
@@ -194,122 +192,120 @@ defaultPalette={0x140c1c,0x442434,0x30346d,0x4e4a4f,0x854c30,0x346524,0xd04648,0
 grayscalePalette={0x000000,0x1e1e1e,0x373737,0x4b4b4b,0x565656,0x636363,0x717171,0x757575,0x7b7b7b,0x898989,0x929292,0xa0a0a0,0xb1b1b1,0xcdcdcd,0xe9e9e9,0xffffff}
 cover={
 	{
-		x1: 37
-		y1: 49
-		x2: 98
-		y2: 101
-		values: "yyku8,e0m5k16o,m601zywhs0,gmnawxzmyp,6bj,13nhfk,1q5w14ao,5i02zkw4qo,22twv48ydc,18mbc,vkaau2o,2rrvtctreo,m672b1oidc,m63k9y43cv,ksb4nqgqgv,3i9z7if3,m5t1g0hgww,m672jxatc0,m672jdcdfh,m66mrstptr,jef9p1ibjz,4oeagkl4v,344zgcyyo,ksc07jamm8,oxr28yrkf,lh93lk4vb4,3xuf6e7,33es2qxts,jef6rjj56o,2fcnf52jgj,2rot9jg6ww,m65beyc8o0,jef6snp2pr,aiy3rojj,fy2hzqvtz4,8c3poaiakg,m672261igw,m5f0c44geb,ezqpr,1n81c0sf,5iypz42sqo,m672jw2kg0,m671kerif3,m5f0c4qr5r,8vn08v,e13wu1of,m672jxbhts,m672jw2kg0,m670kw7i7z,m32tonw3cv,zik0zj,1weekkh4w,1dvxwoc2kg,m66unsvaps,lh93ljwjcv,b8jj,hra0e8,e13wit4w,m671kerhmo,m4my49zbwg,e7,b8jg,4fssu8,esqcetc,0"
+		x1:37
+		y1:49
+		x2:98
+		y2:101
+		values:"yyku8,e0m5k16o,m601zywhs0,gmnawxzmyp,6bj,13nhfk,1q5w14ao,5i02zkw4qo,22twv48ydc,18mbc,vkaau2o,2rrvtctreo,m672b1oidc,m63k9y43cv,ksb4nqgqgv,3i9z7if3,m5t1g0hgww,m672jxatc0,m672jdcdfh,m66mrstptr,jef9p1ibjz,4oeagkl4v,344zgcyyo,ksc07jamm8,oxr28yrkf,lh93lk4vb4,3xuf6e7,33es2qxts,jef6rjj56o,2fcnf52jgj,2rot9jg6ww,m65beyc8o0,jef6snp2pr,aiy3rojj,fy2hzqvtz4,8c3poaiakg,m672261igw,m5f0c44geb,ezqpr,1n81c0sf,5iypz42sqo,m672jw2kg0,m671kerif3,m5f0c4qr5r,8vn08v,e13wu1of,m672jxbhts,m672jw2kg0,m670kw7i7z,m32tonw3cv,zik0zj,1weekkh4w,1dvxwoc2kg,m66unsvaps,lh93ljwjcv,b8jj,hra0e8,e13wit4w,m671kerhmo,m4my49zbwg,e7,b8jg,4fssu8,esqcetc,0"
 	}
 	{
-		x1: 6
-		y1: 2
-		x2: 208
-		y2: 135
-		values: "0,ksb4n6hjpc,1,0,0,lzyktbyrr4,3,0,0,m32twebrwg,3,0,0,m5f49vvxts,1,0,0,m60po9r94w,0,0,0,b31s4yfj0g,e,0,0,m672jx0a2o,7,0,0,m672jx5wcg,f,0,0,m672jx8phc,1,0,0,b33j9ymcqo,0,0,0,5jjrmzb6dc,0,0,0,cgbstct8g,0,0,0,345wr0af4,0,0,0,e0qldjao,0,0,0,vgbyyv0,0,0,mh34,1yjmrjy,0,0,b33l091slc,8qyg3j,0,0,gmnbvf2u4g,13c933,0,0,jqw6gfi03k,4u9kv,0,0,m4my8psqv4,e7,0,0,m5t1h4ftog,1r,0,0,m63ka83lds,f,0,0,m63ka0lwg0,1,0,0,b31s4zoh5s,0,0,0,1dsfmrxp14,0,0,0,689ugxxj3,0,0,gmnawxzmyo,1k0hl4s1r,0,0,ksb4n6hjpc,e04ea3un,0,0,lh93ljwj5s,3hagni7z,0,0,ltq32qm0w0,ukz8utb,0,0,ltq32qm0w0,3p6l3r3,0,0,ltq32qm0w0,fjd9fz,0,0,m32tomn56o,8lnev7,0,0,b1jeubbklc,22wydc,0,0,5irpf5nsao,7hp1c,0,0,1dj85kp8n4,18y68,74,0,cf4e4vmkg,gmnawyxclc,cg,0,346w9kbgg,4ulsom5bls,1k,0,s1q2e2v4,572s5smdxc,f,0,70b2s0lc,m32tomn56o,1,0,1r2rp05c,5irpf5nsao,0,0,vjdui2o,1doxcsey2o,0,0,7vkh14w,c9yx8agw0,0,0,1yr4glc,1idanqfi8,0,0,hma7sw,6krpil1c,0,0,4dbls0,1n6xdn9c,0,0,13bwg0,esqcetc,0,0,jny80,3gay3jw,0,0,b33ja3hxq8,4fti4j,0,0,8bbngi7d34,0,0,0,1dvxwr4utc,0,0,0,5fy8,4u6f4,0,0,19ts,9yw3k,0,0,9hc,jz3ls,0,0,5j4,22y9s0,0,0,16o,9hc,0,0,ow,1r9ff9c,0,0,nduiq35k0,3p6l3pc,0,0,2x8bc9m2o,1h9u1hc,0,0,d5jf18g0,2yjo2yo,0,0,1j8v5jpc,0,0,0,dt7sdz4,0,0,0,3hcekqg,0,0,0,2f38f,0,0,jef6qfnksg,2ghz,0,0,ltq32qm0w0,b33j9yof0j,3,0,m32tomn56o,45ntq8i2v4,0,0,5hzn7bzoxs,11eyfk4ips,0,0,1d3vox5vk0,9cqlw14oo,0,0,o5wqjqw3k,1k4fnc6su,16o,0,bfdi76y874,163bqi521,3k,0,30qlbgv0g,l1nveosm,o,0,b4ms5472f4,3i9z8wzl,4,0,8bpgo9dn9c,1r4zm3uo,1,0,1dzc8ntdds,vkht1xg,mh34,0,11ft0jdbsw,fs8whdu,8feo,0,b9cgjx9xq8,0,23uo,0,2rs3gqh5hc,0,iyo,0,1dw1sl5bsw,0,a68,0,ch1f3v668,0,1o0,0,8lnev4,g,o,0,22wydc,u,k,0,gmnaxzg45c,7,i,0,fxpbz21xxc,gmnawxzmyp,9,0,ab1bgeb8xs,b33j9ynrb4,p,0,2563im6y2o,b33j9ynrb4,0,0,1bcqpbvitc,0,0,0,ob65iodfk,0,0,0,c49q0lgqo,0,0,0,61p2regw0,0,0,0,30wiet43k,0,0,0,1iea6al8g,0,0,0,r753588w,0,0,0,64zgm58g,0,0,0,2mphemtc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36mp0ez17k,0,0,0,2i24hmzq4o,0,0,0,qplrn9hfo,0,0,0,a1hx2kqqk,0,3y283y8,0,0,0,2yjo2yo,0,0,0,qmx0qo,0,0,0,dbgidc,0,0,0,3bv4lc,0,0,0,1xx5og,0,0,0,hhaf4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,b33j9ynrb4,1,0,0,b2bh24zny8,0,0,0,2rdupktw5c,0,0,0,ojxugkxs0,0,0,0,cf8c73qio,0,0,0,1jonefqww,0,0,0,1k0hl42rk,0,0,0,s1yy1340,0,0,0,3i13ki68,0,0,0,7twjgu8,0,0,0,yyku80,0,0,0,22wydc,0,0,0"
+		x1:6
+		y1:2
+		x2:208
+		y2:135
+		values:"0,ksb4n6hjpc,1,0,0,lzyktbyrr4,3,0,0,m32twebrwg,3,0,0,m5f49vvxts,1,0,0,m60po9r94w,0,0,0,b31s4yfj0g,e,0,0,m672jx0a2o,7,0,0,m672jx5wcg,f,0,0,m672jx8phc,1,0,0,b33j9ymcqo,0,0,0,5jjrmzb6dc,0,0,0,cgbstct8g,0,0,0,345wr0af4,0,0,0,e0qldjao,0,0,0,vgbyyv0,0,0,mh34,1yjmrjy,0,0,b33l091slc,8qyg3j,0,0,gmnbvf2u4g,13c933,0,0,jqw6gfi03k,4u9kv,0,0,m4my8psqv4,e7,0,0,m5t1h4ftog,1r,0,0,m63ka83lds,f,0,0,m63ka0lwg0,1,0,0,b31s4zoh5s,0,0,0,1dsfmrxp14,0,0,0,689ugxxj3,0,0,gmnawxzmyo,1k0hl4s1r,0,0,ksb4n6hjpc,e04ea3un,0,0,lh93ljwj5s,3hagni7z,0,0,ltq32qm0w0,ukz8utb,0,0,ltq32qm0w0,3p6l3r3,0,0,ltq32qm0w0,fjd9fz,0,0,m32tomn56o,8lnev7,0,0,b1jeubbklc,22wydc,0,0,5irpf5nsao,7hp1c,0,0,1dj85kp8n4,18y68,74,0,cf4e4vmkg,gmnawyxclc,cg,0,346w9kbgg,4ulsom5bls,1k,0,s1q2e2v4,572s5smdxc,f,0,70b2s0lc,m32tomn56o,1,0,1r2rp05c,5irpf5nsao,0,0,vjdui2o,1doxcsey2o,0,0,7vkh14w,c9yx8agw0,0,0,1yr4glc,1idanqfi8,0,0,hma7sw,6krpil1c,0,0,4dbls0,1n6xdn9c,0,0,13bwg0,esqcetc,0,0,jny80,3gay3jw,0,0,b33ja3hxq8,4fti4j,0,0,8bbngi7d34,0,0,0,1dvxwr4utc,0,0,0,5fy8,4u6f4,0,0,19ts,9yw3k,0,0,9hc,jz3ls,0,0,5j4,22y9s0,0,0,16o,9hc,0,0,ow,1r9ff9c,0,0,nduiq35k0,3p6l3pc,0,0,2x8bc9m2o,1h9u1hc,0,0,d5jf18g0,2yjo2yo,0,0,1j8v5jpc,0,0,0,dt7sdz4,0,0,0,3hcekqg,0,0,0,2f38f,0,0,jef6qfnksg,2ghz,0,0,ltq32qm0w0,b33j9yof0j,3,0,m32tomn56o,45ntq8i2v4,0,0,5hzn7bzoxs,11eyfk4ips,0,0,1d3vox5vk0,9cqlw14oo,0,0,o5wqjqw3k,1k4fnc6su,16o,0,bfdi76y874,163bqi521,3k,0,30qlbgv0g,l1nveosm,o,0,b4ms5472f4,3i9z8wzl,4,0,8bpgo9dn9c,1r4zm3uo,1,0,1dzc8ntdds,vkht1xg,mh34,0,11ft0jdbsw,fs8whdu,8feo,0,b9cgjx9xq8,0,23uo,0,2rs3gqh5hc,0,iyo,0,1dw1sl5bsw,0,a68,0,ch1f3v668,0,1o0,0,8lnev4,g,o,0,22wydc,u,k,0,gmnaxzg45c,7,i,0,fxpbz21xxc,gmnawxzmyp,9,0,ab1bgeb8xs,b33j9ynrb4,p,0,2563im6y2o,b33j9ynrb4,0,0,1bcqpbvitc,0,0,0,ob65iodfk,0,0,0,c49q0lgqo,0,0,0,61p2regw0,0,0,0,30wiet43k,0,0,0,1iea6al8g,0,0,0,r753588w,0,0,0,64zgm58g,0,0,0,2mphemtc,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36mp0ez17k,0,0,0,2i24hmzq4o,0,0,0,qplrn9hfo,0,0,0,a1hx2kqqk,0,3y283y8,0,0,0,2yjo2yo,0,0,0,qmx0qo,0,0,0,dbgidc,0,0,0,3bv4lc,0,0,0,1xx5og,0,0,0,hhaf4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,b33j9ynrb4,1,0,0,b2bh24zny8,0,0,0,2rdupktw5c,0,0,0,ojxugkxs0,0,0,0,cf8c73qio,0,0,0,1jonefqww,0,0,0,1k0hl42rk,0,0,0,s1yy1340,0,0,0,3i13ki68,0,0,0,7twjgu8,0,0,0,yyku80,0,0,0,22wydc,0,0,0"
 	}
 	{
-		x1: 65
-		y1: 4
-		x2: 234
-		y2: 132
-		values: "0,0,0,e7,0,0,2sxs,0,0,4ekjy8,0,0,dx5ulxq8,0,0,awv1jdb0g0,6,0,0,2yo,0,0,4fi9kw,0,0,ry9rfzeo,0,0,ksb4n6hjpc,7,0,0,p34,0,0,hma7sw,0,0,30qlbgv0g,0,0,0,3j,0,0,8wvls0,0,0,oyem6hx4w,0,0,5hzn7bzoxs,1kw,0,0,4ftjog,0,0,68hssn0u8,0,0,rmfkrnk0,sg,0,gmnawxzmyo,27wr2n,0,0,9cqlw6k8w,0,0,3tvghkw,1idanqfwg,0,5ip2po95hc,b33jb2m4xs,am,0,348zli60s,20ecqo,0,61h8uoutc,2d18g95a8,0,1jwjivytc,ksb4p4epyw,ap,gmnawxzmyo,s27ycnjz,u1eyo,0,32hvaio0,s5o4m6ww,0,e0v171fk,4ulsp0wa9v,5c,lzyktbyrr4,gnte8okl6n,7ib67,0,3y73oqo,okszotz4,0,dmb1hu68,2flmtovw1s,o,ocxai5wxs,li0a8vrqym,y0q8,0,4u77c,wb8i3y6,0,dlbxlyps,dili3b7f9c,3,64zgm58g,2m8cth46ri,b6zk,0,lhmoxcobgm,1pjcg9y8,0,dlbo0f0g,bm3jsj76n3,3,0,1bcskgo20u,jqcw,0,58gbkzn5s0,1jfmmpuo,0,aej5n96dq8,j00a3usw0,f,0,noeaxcjsu,13ea8,0,1adps9ga2o,65667wog,0,2lwzek8su8,6b4ofob0g,1o,0,nhd8nnake,9d5hi,0,1bxtam56v4,ojyyvz94,0,1b5ad437cw,35skxj1a8,68,0,ds4c8d03em,yyl8h,0,1b5qdqzqps,5gfirrfwe,0,nkfaflds0,3tqmgps,16o,0,1nmkhtzy,dbgidc,0,lttlse0z5s,1dvxwqtywz,0,17u0xuzt34,2pzs,pa8,0,xv6m,7w4g7wg,0,33cvdvk0,0,0,gacw7gsq9s,6,0,0,5j4u,0,0,3gd4r9c,0,0,64zgm58g,0,0,0,s,0,0,26nsw,0,0,2mphemtc,0,0,0,c,0,1ds,mh34,0,zg24n4,1r4zlse8,0,2rodjjpdkw,1zmc6ww,8,6h9fjdiww,2u6p6g3jzs,mh34,0,1z0svfo,59eytj9d,0,5jiw7jz7k0,ddztb0,o,e4u2xpreo,11eyfp24n0,34dfk,zik0zk,2s5uuhe1l5,c9yx8g00,1dvxwqtyww,j2wubadr0g,6nqlvf,2fawcayg48,3itpin56o,9cr3rd6am,1vf9c,bs1iq3d5hc,amnoxs8w,59eyt9mo,1dvyyhaqyo,b0r9feul1c,zik108,2y0dk30opk,bfrlezpb7k,1dvxwt3cou,1vf9c,5xuyudquio,3hwngie8,3i9z7lkw,c1e983jk74,jklzfkuryp,6nq96v,awv1jdb0w,aejnyt17go,ax7v8qkww,18y68,bz3xiz7xs0,gmnawy1284,3i9z7if4,68xmsledc0,8h1g,pa8,5kbtuszz0g,5bs5g,1z141z4,0,25ubo1s,jef6qfnksg,0,shdduqbr4,0,mfi8,dv9g7d5qtc,68hphedms,z9odzb4,0,33t31smxs,572s5smjgg,0,lzyktego3k,1h9u1hd,27wykg,70jyf0u8,s0,5gh01iozk,0,17jmo,0,1s,3geoxz4,0,0,11igpjbzls,0,0,0,1eg,0,0,flv5s,0,0,d5jf162o,0,7w4g7wg,0,c,0,1,0,0,5zpc,0,0,13ydj40,0,0,cgzh6phq8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13ydj4,1kw,0,1k4fnc6ps,27wr28,0,0,0,0,0,d9jgjvoyyo,3cefseaga,0,cxm4hfrzls,7dh8k2dd1u,11x,erm082fm68,1uil7nefu2,qmwxu,0,es3npxsmbk,22twmyfu2,0,uk8yp2sxs,4stutar6fr,hf,erm082fm68,7e2cumw2i2,2ekh8q,0,es43vi5khs,6r77lm6cq,0,cxm4hfrzls,7dh8k295b6,11x,erm082fm68,8rxyfbwjop,1am3pg,0,0,0,0,0,15kk5rk,0,0,7dhb6rfsao,0,0,es3jlyh69s,xmy,0,0,2mhzplc,0,0,9z0osxxfy8,19m1vk,0,erpii1n4lc,8bazs4ksq,0,0,2mhzpjk,191,0,7dhb6mfzls,2ei51c,0,erpii1n4lc,3kexexhs9"
+		x1:65
+		y1:4
+		x2:234
+		y2:132
+		values:"0,0,0,e7,0,0,2sxs,0,0,4ekjy8,0,0,dx5ulxq8,0,0,awv1jdb0g0,6,0,0,2yo,0,0,4fi9kw,0,0,ry9rfzeo,0,0,ksb4n6hjpc,7,0,0,p34,0,0,hma7sw,0,0,30qlbgv0g,0,0,0,3j,0,0,8wvls0,0,0,oyem6hx4w,0,0,5hzn7bzoxs,1kw,0,0,4ftjog,0,0,68hssn0u8,0,0,rmfkrnk0,sg,0,gmnawxzmyo,27wr2n,0,0,9cqlw6k8w,0,0,3tvghkw,1idanqfwg,0,5ip2po95hc,b33jb2m4xs,am,0,348zli60s,20ecqo,0,61h8uoutc,2d18g95a8,0,1jwjivytc,ksb4p4epyw,ap,gmnawxzmyo,s27ycnjz,u1eyo,0,32hvaio0,s5o4m6ww,0,e0v171fk,4ulsp0wa9v,5c,lzyktbyrr4,gnte8okl6n,7ib67,0,3y73oqo,okszotz4,0,dmb1hu68,2flmtovw1s,o,ocxai5wxs,li0a8vrqym,y0q8,0,4u77c,wb8i3y6,0,dlbxlyps,dili3b7f9c,3,64zgm58g,2m8cth46ri,b6zk,0,lhmoxcobgm,1pjcg9y8,0,dlbo0f0g,bm3jsj76n3,3,0,1bcskgo20u,jqcw,0,58gbkzn5s0,1jfmmpuo,0,aej5n96dq8,j00a3usw0,f,0,noeaxcjsu,13ea8,0,1adps9ga2o,65667wog,0,2lwzek8su8,6b4ofob0g,1o,0,nhd8nnake,9d5hi,0,1bxtam56v4,ojyyvz94,0,1b5ad437cw,35skxj1a8,68,0,ds4c8d03em,yyl8h,0,1b5qdqzqps,5gfirrfwe,0,nkfaflds0,3tqmgps,16o,0,1nmkhtzy,dbgidc,0,lttlse0z5s,1dvxwqtywz,0,17u0xuzt34,2pzs,pa8,0,xv6m,7w4g7wg,0,33cvdvk0,0,0,gacw7gsq9s,6,0,0,5j4u,0,0,3gd4r9c,0,0,64zgm58g,0,0,0,s,0,0,26nsw,0,0,2mphemtc,0,0,0,c,0,1ds,mh34,0,zg24n4,1r4zlse8,0,2rodjjpdkw,1zmc6ww,8,6h9fjdiww,2u6p6g3jzs,mh34,0,1z0svfo,59eytj9d,0,5jiw7jz7k0,ddztb0,o,e4u2xpreo,11eyfp24n0,34dfk,zik0zk,2s5uuhe1l5,c9yx8g00,1dvxwqtyww,j2wubadr0g,6nqlvf,2fawcayg48,3itpin56o,9cr3rd6am,1vf9c,bs1iq3d5hc,amnoxs8w,59eyt9mo,1dvyyhaqyo,b0r9feul1c,zik108,2y0dk30opk,bfrlezpb7k,1dvxwt3cou,1vf9c,5xuyudquio,3hwngie8,3i9z7lkw,c1e983jk74,jklzfkuryp,6nq96v,awv1jdb0w,aejnyt17go,ax7v8qkww,18y68,bz3xiz7xs0,gmnawy1284,3i9z7if4,68xmsledc0,8h1g,pa8,5kbtuszz0g,5bs5g,1z141z4,0,25ubo1s,jef6qfnksg,0,shdduqbr4,0,mfi8,dv9g7d5qtc,68hphedms,z9odzb4,0,33t31smxs,572s5smjgg,0,lzyktego3k,1h9u1hd,27wykg,70jyf0u8,s0,5gh01iozk,0,17jmo,0,1s,3geoxz4,0,0,11igpjbzls,0,0,0,1eg,0,0,flv5s,0,0,d5jf162o,0,7w4g7wg,0,c,0,1,0,0,5zpc,0,0,13ydj40,0,0,cgzh6phq8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13ydj4,1kw,0,1k4fnc6ps,27wr28,0,0,0,0,0,d9jgjvoyyo,3cefseaga,0,cxm4hfrzls,7dh8k2dd1u,11x,erm082fm68,1uil7nefu2,qmwxu,0,es3npxsmbk,22twmyfu2,0,uk8yp2sxs,4stutar6fr,hf,erm082fm68,7e2cumw2i2,2ekh8q,0,es43vi5khs,6r77lm6cq,0,cxm4hfrzls,7dh8k295b6,11x,erm082fm68,8rxyfbwjop,1am3pg,0,0,0,0,0,15kk5rk,0,0,7dhb6rfsao,0,0,es3jlyh69s,xmy,0,0,2mhzplc,0,0,9z0osxxfy8,19m1vk,0,erpii1n4lc,8bazs4ksq,0,0,2mhzpjk,191,0,7dhb6mfzls,2ei51c,0,erpii1n4lc,3kexexhs9"
 	}
 	{
-		x1: 24
-		y1: 53
-		x2: 104
-		y2: 118
-		values: "6sntysxs,0,b280,5gfironi80,0,8qn7k0,0,70,tlgotmo,0,0,0,0,0,0,0,0,ltq32qm0w,0,4fi9kw,ltq32qm0w0,e7,1k4fice0w,0,2hwce,m672261i4g,1,1z141s0,m65jb25zb4,1kv,s27tnitc,m1bop0vxmo,aw3j,4unjtjbzls,0,cn3,689ll9ips,0,4zj0g,hy5dzrvnk0,7,7srm51c,30qlbgv0g,64v,1d7kxbeo0,g9e97xm1vk,329,akoslfy8,duvf3gbp4w,34f,1jw8jpj40,jef6qfnkso,zjsslj,li3coe62gw,1ds,59jeroow,5jiw2hj01s,23z0,17qxhq2dq8,lzyktbyrr4,6xne1zb,ong4eji0w,5li6,5j65ttmzum,m671kerhmo,8vc3yb,jqsofefhfk,ltq32qm1a7,e128to9b,ksb52put4w,mh33,b33j8upds0,jny8,lh93ufjjcw,m65bexpreo,zdk8hr,gmo6hegr9c,sf,aexmh70gsc,346w9kbgg,hpel4w,b301002mtc,5gfironj0f,e13wofeo,gmnawxzmyo,mh33,b33j130r28,0,4fthxc,m601zywhs0,3j,1r4zaio0,gmnawxzmyo,pa7,68hhppqm8,0,4zshs,m601zywhs0,1,hr4e80,gmnawxzmyo,73,1qw3yqyo,0,c8w"
+		x1:24
+		y1:53
+		x2:104
+		y2:118
+		values:"6sntysxs,0,b280,5gfironi80,0,8qn7k0,0,70,tlgotmo,0,0,0,0,0,0,0,0,ltq32qm0w,0,4fi9kw,ltq32qm0w0,e7,1k4fice0w,0,2hwce,m672261i4g,1,1z141s0,m65jb25zb4,1kv,s27tnitc,m1bop0vxmo,aw3j,4unjtjbzls,0,cn3,689ll9ips,0,4zj0g,hy5dzrvnk0,7,7srm51c,30qlbgv0g,64v,1d7kxbeo0,g9e97xm1vk,329,akoslfy8,duvf3gbp4w,34f,1jw8jpj40,jef6qfnkso,zjsslj,li3coe62gw,1ds,59jeroow,5jiw2hj01s,23z0,17qxhq2dq8,lzyktbyrr4,6xne1zb,ong4eji0w,5li6,5j65ttmzum,m671kerhmo,8vc3yb,jqsofefhfk,ltq32qm1a7,e128to9b,ksb52put4w,mh33,b33j8upds0,jny8,lh93ufjjcw,m65bexpreo,zdk8hr,gmo6hegr9c,sf,aexmh70gsc,346w9kbgg,hpel4w,b301002mtc,5gfironj0f,e13wofeo,gmnawxzmyo,mh33,b33j130r28,0,4fthxc,m601zywhs0,3j,1r4zaio0,gmnawxzmyo,pa7,68hhppqm8,0,4zshs,m601zywhs0,1,hr4e80,gmnawxzmyo,73,1qw3yqyo,0,c8w"
 	}
 	{
-		x1: 70
-		y1: 58
-		x2: 209
-		y2: 130
-		values: "0,0,rmfkrnk,0,0,jny8,18y68,aqmjsry9kw,c,e8,721892bk,1dxp1qh4ow,0,um38t1c,rmpkd1s,b33j9ynrb4,1k4fsh9dw,4dgcg,545jugd1c,jef7m2db7k,qo,22ucu5vn28,5i6fv63xts,32oqv118u8,309h98h,fs89yri,p0629nfnk,5ugmonywh,2htyo,1d6umyccc,koett7rojk,b3ft8vw1yv,49rs,c26cevuv4,chowp6qzgg,45ntq8hwqu,xsd30g,3m8goutc,629mnz6i2o,jef6qfq8uw,g7,48eir52ps0,1h06s1icjj,0,2ropfx6fb4,dbgidc,70jyf0u8,vk9ophc,p34,1nxkao,9zkow,0,ltq70vc7i8,35r,0,gsql7ln6kg,1,0,hcamf4,0,0,npd,0,jegxvf9c00,1,0,6krqrj7k,0,9cqlw14ao,hmwow,0,1jhqsjk,2rk,0,45ntq8kd8g,0,0,3u48efwu,0,1d3vox5vk,13bzls,0,b33jhqce0w,69s,0,ltq34yk3cw,0,gmnawxzmyo,1p5yo3yb,0,1s4i5s74,4u6f4,0,9cqlwks8w,e4,0,4oday0k80,0,9cqlw14ao,0,0,hra0hs,0,0,47pc,0,0,3y283yw,0,awv1jdb0g,thxc,0,5jjz1ci328,9s,0,17qqk2ksn4,0,0,tsn60o0,0,5db9wdz4sg,f0irw,0,46fywlu328,7,0,ca7t0wzk,13bwg,0,f0sn4,1k,0,28ywbqe6tc,0,0,3xzq7ls,0,2ltwwtxq80,2t1c,0,m32ugdijgg,3,0,1r3vo9a8,0,b33j9ynrb4,27lgxu,0,ltyuromsxs,73,0,m671kor30g,0,0,fs8qtj4,0,3wb34cgsg,10iq8,0,b1jiq5mxhc,1o,0,9g476eneo,0,b33j9ynrb4,ej8kf,0,33dasvhts,61g,0,dkclnikjy8,0,0,3ue5imf4,0,aqmjsry9kw,1x05j,0,qa3bib5s,7d,0,vklw4t1c,0,0,8vnh2w,0,8s2z4ovtog,1ekg,0,15ruvabk,8,0,s27zyrr4,0,gmnawxzmyo,zl,0,34amfnz6rk,0,0,0"
+		x1:70
+		y1:58
+		x2:209
+		y2:130
+		values:"0,0,rmfkrnk,0,0,jny8,18y68,aqmjsry9kw,c,e8,721892bk,1dxp1qh4ow,0,um38t1c,rmpkd1s,b33j9ynrb4,1k4fsh9dw,4dgcg,545jugd1c,jef7m2db7k,qo,22ucu5vn28,5i6fv63xts,32oqv118u8,309h98h,fs89yri,p0629nfnk,5ugmonywh,2htyo,1d6umyccc,koett7rojk,b3ft8vw1yv,49rs,c26cevuv4,chowp6qzgg,45ntq8hwqu,xsd30g,3m8goutc,629mnz6i2o,jef6qfq8uw,g7,48eir52ps0,1h06s1icjj,0,2ropfx6fb4,dbgidc,70jyf0u8,vk9ophc,p34,1nxkao,9zkow,0,ltq70vc7i8,35r,0,gsql7ln6kg,1,0,hcamf4,0,0,npd,0,jegxvf9c00,1,0,6krqrj7k,0,9cqlw14ao,hmwow,0,1jhqsjk,2rk,0,45ntq8kd8g,0,0,3u48efwu,0,1d3vox5vk,13bzls,0,b33jhqce0w,69s,0,ltq34yk3cw,0,gmnawxzmyo,1p5yo3yb,0,1s4i5s74,4u6f4,0,9cqlwks8w,e4,0,4oday0k80,0,9cqlw14ao,0,0,hra0hs,0,0,47pc,0,0,3y283yw,0,awv1jdb0g,thxc,0,5jjz1ci328,9s,0,17qqk2ksn4,0,0,tsn60o0,0,5db9wdz4sg,f0irw,0,46fywlu328,7,0,ca7t0wzk,13bwg,0,f0sn4,1k,0,28ywbqe6tc,0,0,3xzq7ls,0,2ltwwtxq80,2t1c,0,m32ugdijgg,3,0,1r3vo9a8,0,b33j9ynrb4,27lgxu,0,ltyuromsxs,73,0,m671kor30g,0,0,fs8qtj4,0,3wb34cgsg,10iq8,0,b1jiq5mxhc,1o,0,9g476eneo,0,b33j9ynrb4,ej8kf,0,33dasvhts,61g,0,dkclnikjy8,0,0,3ue5imf4,0,aqmjsry9kw,1x05j,0,qa3bib5s,7d,0,vklw4t1c,0,0,8vnh2w,0,8s2z4ovtog,1ekg,0,15ruvabk,8,0,s27zyrr4,0,gmnawxzmyo,zl,0,34amfnz6rk,0,0,0"
 	}
 	{
-		x1: 64
-		y1: 107
-		x2: 130
-		y2: 135
-		values: "0,iyo,fjd9fk,c2ydayry8,1p5yhp8g,ksb4n6hk3g,iqewx,6fhb1ahhc,1y759ts,2rdupktwjq,f4npc,cdprr7xs,2ots233z7k,3ah5559yjj,gozhkg8uws,fs8scn3,5jjcjze540,8lugwe4hkw,ltrq9nzugv,jef7s62tf3,1cbtaa58ht,lzqonubrwg,m4rc7cn5kv,gmnaz5we0d,70jx62lm,m65bex7xts,m66hnfwooz,gdakb29r7f,7w4almm,b33j9ym000,m670by2k1s,m65bexr5z3,7w4g7wf,b33j9ynrb3,m672jxbcao,m672hpeupr,m5t1kgaz27,3i9z7if3,0"
+		x1:64
+		y1:107
+		x2:130
+		y2:135
+		values:"0,iyo,fjd9fk,c2ydayry8,1p5yhp8g,ksb4n6hk3g,iqewx,6fhb1ahhc,1y759ts,2rdupktwjq,f4npc,cdprr7xs,2ots233z7k,3ah5559yjj,gozhkg8uws,fs8scn3,5jjcjze540,8lugwe4hkw,ltrq9nzugv,jef7s62tf3,1cbtaa58ht,lzqonubrwg,m4rc7cn5kv,gmnaz5we0d,70jx62lm,m65bex7xts,m66hnfwooz,gdakb29r7f,7w4almm,b33j9ym000,m670by2k1s,m65bexr5z3,7w4g7wf,b33j9ynrb3,m672jxbcao,m672hpeupr,m5t1kgaz27,3i9z7if3,0"
 	}
 }
 coverColors={4,8,15,12,14,11}
 removeItem=(list,item)->
-	[i for i in *list when i~=item]
+	for i=#list,1,-1
+		if list[i]==item
+			remove(list,i)
+			break
 round=(n)->
 	if n>0 then floor(n+.5) else ceil(n-.5)
 leftPad=(s,len,char=' ')->
 	s=s..''
 	string.rep(char,len-#s)..s
 shiftChar=(s,charI,n)->
-	local char,num
-	char=string.sub(s,charI,charI)
-	num=(stringToNumber(char)+n)%39
-	if num<1
-		num=39
-	char=string.sub(numberToString(num),1,1)
-	string.sub(s,1,charI-1)..char..string.sub(s,charI+1)
+	_char=string.sub(s,charI,charI)
+	_num=(stringToNumber(_char)+n)%39
+	if _num<1
+		_num=39
+	_char=string.sub(numberToString(_num),1,1)
+	string.sub(s,1,charI-1).._char..string.sub(s,charI+1)
 makeDefaultBoardEntry=(i)->
 	{
 		name:'+PAR+'
 		score:55-i*5
 	}
 makeDefaultBoard=()->
-	local r,i
 	r={}
 	for i=1,10
 		insert(r,makeDefaultBoardEntry(i))
 	r
 readBoard=(namesStart,scoresStart)->
-	local i,r,name
 	r={}
 	for i=1,10
-		name=numberToString(pmem(namesStart+i-1))
-		if name==''
+		_name=numberToString(pmem(namesStart+i-1))
+		if _name==''
 			insert(r,makeDefaultBoardEntry(i))
 		else
 			insert(r,{
-				name:name
+				name:_name
 				score:pmem(scoresStart+i-1)
 			})
 	r
 writeBoard=(namesStart,scoresStart,board)->
-	local i,item
 	board=[item for item in *board[1,10]]
 	for i=1,10
-		item=board[i]
-		if item.name=='+PAR+'
+		_item=board[i]
+		if _item.name=='+PAR+'
 			pmem(namesStart+i-1,0)
 			pmem(scoresStart+i-1,0)
 		else
-			pmem(namesStart+i-1,stringToNumber(item.name))
-			pmem(scoresStart+i-1,item.score)
+			pmem(namesStart+i-1,stringToNumber(_item.name))
+			pmem(scoresStart+i-1,_item.score)
 addToBoard=()->
-	local board,boardScoresStart,boardNamesStart
+	local _board,_boardNamesStart,_boardScoresStart
 	if killedAnyone
-		board=boardNormal
-		boardNamesStart=PMEM_BOARD_NORMAL_NAMES_START
-		boardScoresStart=PMEM_BOARD_NORMAL_SCORES_START
+		_board=boardNormal
+		_boardNamesStart=PMEM_BOARD_NORMAL_NAMES_START
+		_boardScoresStart=PMEM_BOARD_NORMAL_SCORES_START
 	else
-		boardNamesStart=PMEM_BOARD_PURE_NAMES_START
-		boardScoresStart=PMEM_BOARD_PURE_SCORES_START
-		board=boardPure
-	insert(board,{
+		_boardNamesStart=PMEM_BOARD_PURE_NAMES_START
+		_boardScoresStart=PMEM_BOARD_PURE_SCORES_START
+		_board=boardPure
+	insert(_board,{
 		name:name
 		score:score
 	})
-	sort(board,(a,b)->a.score>b.score)
-	writeBoard(boardNamesStart,boardScoresStart,board)
+	sort(_board,(a,b)->a.score>b.score)
+	writeBoard(_boardNamesStart,_boardScoresStart,_board)
 madeHighScore=()->
-	local board
-	if killedAnyone
-		board=boardNormal
+	_board=if killedAnyone
+		boardNormal
 	else
-		board=boardPure
-	score>board[#board].score
+		boardPure
+	score>_board[#_board].score
 boardNormal=readBoard(PMEM_BOARD_NORMAL_NAMES_START,PMEM_BOARD_NORMAL_SCORES_START)
 boardPure=readBoard(PMEM_BOARD_PURE_NAMES_START,PMEM_BOARD_PURE_SCORES_START)
 getFrameId=(sec,count,t=0)->
@@ -331,7 +327,6 @@ decrease=(n,maxAmount)->
 shouldFlash=(t)->
 	if t==nil
 		return false
-	local e
 	e=frameTime-t
 	e<600 and e>=0 and getFrameId(.1,2,t)==1
 isWaterfall=(tile,x,y)->
@@ -496,10 +491,14 @@ drawHorizon=()->
 	drawHill(x+w*2,y,w*.15,h*.1)
 perpProduct=(a,b)->
 	a.x*b.y-a.y*b.x
+subtractVector=(a,b)->
+	{x:a.x-b.x,y:a.y-b.y}
+segmentToVector=(s)->
+	subtractVector(s.b,s.a)
 segmentIntersectionT=(a,b)->
-	v1=b\toVector!
-	v2=a\toVector!
-	v3=b.a\subtract(a.a)
+	v1=segmentToVector(b)
+	v2=segmentToVector(a)
+	v3=subtractVector(b.a,a.a)
 	perpProduct(v3,v1)/perpProduct(v2,v1)
 segmentHitsSegment=(a,b)->
 	t1=segmentIntersectionT(a,b)
@@ -507,46 +506,47 @@ segmentHitsSegment=(a,b)->
 		return false
 	t2=segmentIntersectionT(b,a)
 	t2>0 and t2<1
+makeTriangle=(a,b,c)->
+	{a:a,b:b,c:c}
+makeRectangle=(x1,y1,x2,y2)->
+	{x1:x1,y1:y1,x2:x2,y2:y2}
+rectangleIntersection=(a,b)->
+	makeRectangle(
+		max(a.x1,b.x1),
+		max(a.y1,b.y1),
+		min(a.x2,b.x2),
+		min(a.y2,b.y2))
+rectangleArea=(r)->
+	a=r.x2-r.x1
+	b=r.y2-r.y1
+	a*b
+rectangleIntersectionRatio=(a,b)->
+	rectangleArea(rectangleIntersection(a,b))/rectangleArea(a)
 rectangleHitsRectangle=(a,b)->
-	a.a.x<b.b.x and a.b.x>b.a.x and
-		a.a.y<b.b.y and a.b.y>b.a.y
-		
+	a.x1<b.x2 and a.x2>b.x1 and
+		a.y1<b.y2 and a.y2>b.y1
+rectangleIncludesXY=(r,x,y)->
+	x>=r.x1 and x<=r.x2 and y>=r.y1 and y<=r.y2
 rectangleHitsSegment=(r,s)->
-	a=r.a
-	b=Vector(r.b.x,r.a.y)
-	c=r.b
-	d=Vector(r.a.x,r.b.y)
-	rSegments={
-		Segment(a,b),
-		Segment(b,c),
-		Segment(c,d),
-		Segment(d,a)
-	}
-	for rs in *rSegments
-		if segmentHitsSegment(s,rs)
-			return true
-	false
+	a={x:r.x1,y:r.y1}
+	b={x:r.x2,y:r.y1}
+	c={x:r.x2,y:r.y2}
+	d={x:r.x1,y:r.y2}
+	segmentHitsSegment(s,{a:a,b:b}) or
+		segmentHitsSegment(s,{a:b,b:c}) or
+		segmentHitsSegment(s,{a:c,b:d}) or
+		segmentHitsSegment(s,{a:d,b:a})
 rectangleHitsTriangle=(r,t)->
-	rectangleHitsSegment(r,
-		Segment(t.a,t.b)) or
-	rectangleHitsSegment(r,
-		Segment(t.b,t.c)) or
-	rectangleHitsSegment(r,
-		Segment(t.c,t.a))
-		
+	rectangleHitsSegment(r,{a:t.a,b:t.b}) or
+	rectangleHitsSegment(r,{a:t.b,b:t.c}) or
+	rectangleHitsSegment(r,{a:t.c,b:t.a})
 getTileRectangle=(tileX,tileY,tile)->
 	switch tile
 		when 96
-			return Rectangle(
-				Vector(tileX*8,tileY*8),
-				Vector(tileX*8+8,tileY*8+2))
+			return makeRectangle(tileX*8,tileY*8,tileX*8+8,tileY*8+2)
 		when 132
-			return Rectangle(
-				Vector(tileX*8,tileY*8),
-				Vector(tileX*8+8,tileY*8+2))
-	Rectangle(
-		Vector(tileX*8,tileY*8),
-		Vector(tileX*8+8,tileY*8+8))
+			return makeRectangle(tileX*8,tileY*8,tileX*8+8,tileY*8+2)
+	makeRectangle(tileX*8,tileY*8,tileX*8+8,tileY*8+8)
 getTile=(x,y)->
 	if x<0 or x>=cam.width or y>=cam.height
 		return 17
@@ -563,10 +563,10 @@ xyHitsGhostDownTile=(x,y)->
 			return true
 	false
 rectangleHitsWall=(r,all)->
-	tileX1=floor(r.a.x/8)
-	tileX2=floor(r.b.x/8)
-	tileY1=floor(r.a.y/8)
-	tileY2=floor(r.b.y/8)
+	tileX1=floor(r.x1/8)
+	tileX2=floor(r.x2/8)
+	tileY1=floor(r.y1/8)
+	tileY2=floor(r.y2/8)
 	result={}
 	finished=false
 	for tileX=tileX1,tileX2
@@ -578,18 +578,18 @@ rectangleHitsWall=(r,all)->
 					getTileRectangle(tileX,tileY,tile))
 			else if slopeUp[tile]
 				hit=rectangleHitsTriangle(r,
-					Triangle(
-						Vector(tileX*8,tileY*8+8),
-						Vector(tileX*8+8,tileY*8),
-						Vector(tileX*8+8,tileY*8+8)))
+					makeTriangle(
+						{x:tileX*8,y:tileY*8+8},
+						{x:tileX*8+8,y:tileY*8},
+						{x:tileX*8+8,y:tileY*8+8}))
 			else if slopeDown[tile]
 				hit=rectangleHitsTriangle(r,
-					Triangle(
-						Vector(tileX*8,tileY*8),
-						Vector(tileX*8+8,tileY*8+8),
-						Vector(tileX*8,tileY*8+8)))
+					makeTriangle(
+						{x:tileX*8,y:tileY*8},
+						{x:tileX*8+8,y:tileY*8+8},
+						{x:tileX*8,y:tileY*8+8}))
 			if hit
-				insert(result,Vector(tileX,tileY))
+				insert(result,{x:tileX,y:tileY})
 				if not all
 					finished=true
 					break
@@ -599,10 +599,10 @@ rectangleHitsWall=(r,all)->
 		return result
 	nil
 rectangleHitsTurn=(r)->
-	tileX1=floor(r.a.x/8)
-	tileX2=floor(r.b.x/8)
-	tileY1=floor(r.a.y/8)
-	tileY2=floor(r.b.y/8)
+	tileX1=floor(r.x1/8)
+	tileX2=floor(r.x2/8)
+	tileY1=floor(r.y1/8)
+	tileY2=floor(r.y2/8)
 	for tileX=tileX1,tileX2
 		for tileY=tileY1,tileY2
 			if turnTiles[tileX..'-'..tileY]
@@ -613,10 +613,10 @@ rectangleHitsTurn=(r)->
 rectangleHitsEnemies=(r)->
 	[enemy for enemy in *enemies when rectangleHitsRectangle(r,enemy\getRectangle!)]
 rectangleSwims=(r,ratio)->
-	tileX1=floor(r.a.x/8)
-	tileX2=floor(r.b.x/8)
-	tileY1=floor(r.a.y/8)
-	tileY2=floor(r.b.y/8)
+	tileX1=floor(r.x1/8)
+	tileX2=floor(r.x2/8)
+	tileY1=floor(r.y1/8)
+	tileY2=floor(r.y2/8)
 	ratioUnderwater=0
 	for tileX=tileX1,tileX2
 		for tileY=tileY1,tileY2
@@ -628,7 +628,7 @@ rectangleSwims=(r,ratio)->
 					if ratio==nil
 						return true
 					else
-						ratioUnderwater+=r\intersectionRatio(tileRectangle)
+						ratioUnderwater+=rectangleIntersectionRatio(r,tileRectangle)
 						if ratioUnderwater>=ratio
 							return true
 	false
@@ -716,17 +716,15 @@ drawMap=->
 		remap
 	)
 prepareCover=->
-	local zeroOnes,n
 	for i,o in ipairs(cover)
-		zeroOnes={}
+		_zeroOnes={}
 		for b36 in string.gmatch(o.values,"([^,]+)")
 			n=tonumber(b36,36)
 			for p=0,50
-				insert(zeroOnes,if math.pow(2,p)&n>0 then 1 else 0)
+				insert(_zeroOnes,if math.pow(2,p)&n>0 then 1 else 0)
 		o.color=coverColors[i]
-		o.values=zeroOnes
+		o.values=_zeroOnes
 drawCover=->
-	local i
 	cls!
 	circ(cam.width/3,cam.height/3,cam.height*.8,1)
 	for o in *cover
@@ -759,14 +757,13 @@ drawScoreButton=(x,y)->
 	spr(351,x+8,y,0) -- /
 	spr(348,x+8*2,y,0) -- Y
 drawBoard=(x,board,isPure)->
-	local color
 	if isPure
 		spr(350,x,7,0)
 		print('   No Kill Scores',x,8)
 	else
 		print('High Scores',x+12,8)
 	for i,item in ipairs(board)
-		color=switch i
+		_color=switch i
 			when 1
 				15
 			when 2
@@ -775,7 +772,7 @@ drawBoard=(x,board,isPure)->
 				9
 			else
 				7
-		print("#{leftPad(i,2)}. #{item.name} #{leftPad(item.score,3)}",x+2,12+i*9,color,true)
+		print("#{leftPad(i,2)}. #{item.name} #{leftPad(item.score,3)}",x+2,12+i*9,_color,true)
 drawBoards=()->
 	cls!
 	drawBoard(24,boardNormal)
@@ -788,8 +785,11 @@ drawInput=()->
 	spr(347,83+12*5,31,0,1)
 	rect(82+12*(charI-1),42,10,2,6)
 updateSprites=->
-	for i,sprite in ipairs(sprites)
-		sprite\checkActive!
+	local sprite
+	r=cam\getRectangle(cam.width/2)
+	for i=#sprites,1,-1
+		sprite=sprites[i]
+		sprite\checkActive(r)
 		if sprite.isActive
 			if sprite.think
 				sprite\think!
@@ -801,9 +801,15 @@ drawSprites=->
 	for decor in *decors
 		if decor.isActive
 			decor\draw!
+	rollColors!
 	for collectible in *collectibles
 		if collectible.isActive
 			collectible\draw!
+	if todor.isLavaProofStart!=nil
+		spr(73,cam.width - 16,8,0)
+	if todor.isMightyStart!=nil
+		spr(74,cam.width - 24,8,0)
+	resetPaletteIndices!
 	for enemy in *enemies
 		if enemy.isActive
 			enemy\draw!
@@ -882,8 +888,8 @@ main=->
 	cam=Camera!
 	todor=Todor!
 	cam.follow=todor
-	for y=0,cam.height*7
-		for x=0,cam.width*7
+	for y=0,TILE_COUNT_Y*7
+		for x=0,TILE_COUNT_X*8-1
 			tile=mget(x,y)
 			if destructible[tile]
 				destructibleTiles[x..'-'..y]=3
@@ -1051,40 +1057,6 @@ class ButtonState
 		@pressed=not @wasOn and @isOn
 		@released=@wasOn and not @isOn
 		@changed=@pressed or @released
-class Vector
-	new:(x=0,y=0)=>
-		@x=x
-		@y=y
-	subtract:(o)=>
-		Vector(@x-o.x,@y-o.y)
-class Rectangle
-	new:(a=Vector(),b=Vector())=>
-		@a=a
-		@b=b
-	intersection:(r)=>
-		Rectangle(
-			Vector(max(@a.x,r.a.x),
-				max(@a.y,r.a.y)),
-			Vector(min(@b.x,r.b.x),
-				min(@b.y,r.b.y)))
-	area:=>
-		a=@b.x-@a.x
-		b=@b.y-@a.y
-		a*b
-	intersectionRatio:(r)=>
-		@intersection(r)\area!/@area!
-class Segment
-	new:(a=Vector!,b=Vector!)=>
-		@a=a
-		@b=b
-	toVector:=>
-		@b\subtract(@a)
-class Triangle
-	new:(a=Vector(),b=Vector(),
-		c=Vector())=>
-		@a=a
-		@b=b
-		@c=c
 class Camera
 	new:=>
 		@width=240
@@ -1110,9 +1082,7 @@ class Camera
 	getRectangle:(padding=0)=>
 		tlx=@getTopLeftX!
 		tly=@getTopLeftY!
-		Rectangle(
-			Vector(tlx-padding,tly-padding),
-			Vector(tlx+@width+padding,tly+@height+padding))
+		makeRectangle(tlx-padding,tly-padding,tlx+@width+padding,tly+@height+padding)
 	getTileX:=>
 		floor(@getTopLeftX!/8)
 	getTileY:=>
@@ -1158,7 +1128,7 @@ class FloatingSprite
 	shouldRemove:=>
 		false
 	remove:=>
-		sprites=removeItem(sprites,self)
+		removeItem(sprites,self)
 class Sprite extends FloatingSprite
 	new:=>
 		super!
@@ -1173,13 +1143,9 @@ class Sprite extends FloatingSprite
 	getCamY:(layer)=>
 		round(@getTopLeftY(layer)-cam\getTopLeftY!)
 	getRectangle:=>
-		Rectangle(
-			Vector(@x-1,@y-1),
-			Vector(@x+1,@y+1))
-	checkActive:=>
-		@isActive=rectangleHitsRectangle(
-			@getRectangle!,
-			cam\getRectangle(cam.width/2))
+		makeRectangle(@x-1,@y-1,@x+1,@y+1)
+	checkActive:(activeRect)=>
+		@isActive=rectangleIncludesXY(activeRect,@x,@y)
 	applyGravity:=>
 		@spdY+=GRAVITY
 	canWalk:=>
@@ -1203,12 +1169,8 @@ class Sprite extends FloatingSprite
 		else
 			@onGround=@spdY>0
 			if @onGround and @spdY>0
-				while @canMove(@x,@y+GRAVITY)
-					@y+=GRAVITY
-				-- if @y%8>7
-				-- 	tileBottom=@y-@y%8+8
-				-- 	if @canMove(@x,tileBottom)
-				-- 		@y=tileBottom
+				while @canMove(@x,@y+.5)
+					@y+=.5
 			@spdY=0
 	swim:=>
 		if @canMove(@x+@spdX,@y)
@@ -1226,7 +1188,7 @@ class Decor extends Sprite
 	move:=>
 		return
 	remove:=>
-		decors=removeItem(decors,self)
+		removeItem(decors,self)
 		super!
 class TorchLight extends Decor
 	new:=>
@@ -1287,7 +1249,7 @@ class TodorShot extends Sprite
 	shouldRemove:=>
 		@isFinished
 	remove:=>
-		shots=removeItem(shots,self)
+		removeItem(shots,self)
 		super!
 	tweakPalette:=>
 		setPaletteIndex(15,getFrame(.1,flamePaletteIndexes,@startTime))
@@ -1297,9 +1259,7 @@ class TodorShotNormal extends TodorShot
 	getTileId:=>
 		260
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-1,y-1),
-			Vector(x+1,y+1))
+		makeRectangle(x-1,y-1,x+1,y+1)
 	move:=>
 		@applyGravity!
 		super!
@@ -1322,9 +1282,7 @@ class TodorShotNoFall extends TodorShot
 			return result+4
 		return result-4
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-1,y-1),
-			Vector(x+1,y+1))
+		makeRectangle(x-1,y-1,x+1,y+1)
 	move:=>
 		@spdY=0
 		super!
@@ -1340,7 +1298,7 @@ class EnemyShot extends Sprite
 	shouldRemove:=>
 		not @isActive or @isFinished
 	remove:=>
-		enemyShots=removeItem(enemyShots,self)
+		removeItem(enemyShots,self)
 		super!
 class Lightning extends EnemyShot
 	new:=>
@@ -1351,9 +1309,7 @@ class Lightning extends EnemyShot
 	getTileId:=>
 		getFrame(.1,@flyFrames,@startTime)
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+3))
+		makeRectangle(x-3,y-3,x+3,y+3)
 	move:=>
 		@swim!
 	think:=>
@@ -1385,9 +1341,7 @@ class Star extends EnemyShot
 	getFlip:=>
 		getFrame(.1,@flipFrames,@startTime)
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+3))
+		makeRectangle(x-3,y-3,x+3,y+3)
 	move:=>
 		@swim!
 	think:=>
@@ -1422,9 +1376,7 @@ class KaporShot extends EnemyShot
 			return result+4
 		return result-4
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-1,y-1),
-			Vector(x+1,y+1))
+		makeRectangle(x-1,y-1,x+1,y+1)
 	move:=>
 		@swim!
 	think:=>
@@ -1453,9 +1405,7 @@ class Flame extends Sprite
 			return 0
 		1
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-4,y-4),
-			Vector(x+4,y+4))
+		makeRectangle(x-4,y-4,x+4,y+4)
 	checkActive:=>
 		@isActive=true
 	move:=>
@@ -1477,7 +1427,7 @@ class Flame extends Sprite
 	shouldRemove:=>
 		getFrameLooped(.1,@frames,@startTime)
 	remove:=>
-		flames=removeItem(flames,self)
+		removeItem(flames,self)
 		super!
 	tweakPalette:=>
 		setPaletteIndex(15,getFrame(.1,flamePaletteIndexes))
@@ -1490,7 +1440,7 @@ class Enemy extends Sprite
 		insert(enemies,self)
 	canMove:=>true
 	remove:=>
-		enemies=removeItem(enemies,self)
+		removeItem(enemies,self)
 		super!
 	hitsTodor:=>
 		if not todor.isDead
@@ -1522,9 +1472,7 @@ class Walker extends Enemy
 				return 1
 		0
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+4))
+		makeRectangle(x-3,y-3,x+3,y+4)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -1603,9 +1551,7 @@ class Walker2 extends Enemy
 				return 1
 		0
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-9,y-9),
-			Vector(x+9,y+12))
+		makeRectangle(x-9,y-9,x+9,y+12)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -1668,9 +1614,7 @@ class Flyer extends Enemy
 			return 1
 		0
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+3))
+		makeRectangle(x-3,y-3,x+3,y+3)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -1739,9 +1683,7 @@ class Flyer2 extends Enemy
 			return 1
 		0
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-4,y-2),
-			Vector(x+4,y+2))
+		makeRectangle(x-4,y-2,x+4,y+2)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -1807,9 +1749,7 @@ class Fairy extends Enemy
 			return 1
 		0
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+3))
+		makeRectangle(x-3,y-3,x+3,y+3)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -1879,9 +1819,7 @@ class Ghost extends Enemy
 			return 1
 		0
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-2,y-3),
-			Vector(x+2,y+3))
+		makeRectangle(x-2,y-3,x+2,y+3)
 	move:=>
 		if @upStart==nil and @downStart==nil
 			@swim!
@@ -1932,9 +1870,7 @@ class Swimmer extends Enemy
 			return 1
 		0
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+3))
+		makeRectangle(x-3,y-3,x+3,y+3)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -1974,7 +1910,7 @@ class Collectible extends Sprite
 		@collectedTime=nil
 		insert(collectibles,self)
 	remove:=>
-		collectibles=removeItem(collectibles,self)
+		removeItem(collectibles,self)
 		super!
 	hitsTodor:=>
 		if not todor.isDead
@@ -1986,9 +1922,7 @@ class Collectible extends Sprite
 	shouldRemove:=>
 		@collectedTime~=nil
 	getRectangle:=>
-		Rectangle(
-			Vector(@x-3,@y-3),
-			Vector(@x+3,@y+3))
+		makeRectangle(@x-3,@y-3,@x+3,@y+3)
 	move:=>
 		return
 class Gem extends Collectible
@@ -1999,15 +1933,7 @@ class Gem extends Collectible
 		56
 	onCollected:=>
 		addScore(1)
-	tweakPalette:=>
-		rollColors(@startRoll)
-		setPaletteIndex(15)
-	untweakPalette:=>
-		resetPaletteIndices!
 class ThinPotion extends Collectible
-	new:=>
-		super!
-		@startRoll=random(0,999)
 	getTileId:=>
 		74
 	onCollected:=>
@@ -2015,9 +1941,6 @@ class ThinPotion extends Collectible
 		todor.shotConstructor=TodorShotNoFall
 		sfxCollectLife!
 class FatPotion extends Collectible
-	new:=>
-		super!
-		@startRoll=random(0,999)
 	getTileId:=>
 		73
 	onCollected:=>
@@ -2032,9 +1955,7 @@ class Sarcophagus extends Decor
 		if not todor.isDead
 			rectangleHitsRectangle(@getRectangle!,todor\getRectangle!)
 	getRectangle:=>
-		Rectangle(
-			Vector(@x-3,@y-4),
-			Vector(@x+4,@y+4))
+		makeRectangle(@x-3,@y-4,@x+4,@y+4)
 	think:=>
 		if @openedTime==nil
 			if @hitsTodor!
@@ -2141,9 +2062,7 @@ class Ludmilla extends Enemy
 				return result-7
 		return result
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+4))
+		makeRectangle(x-3,y-3,x+3,y+4)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -2217,9 +2136,7 @@ class KaporHoldsLudmilla extends Enemy
 	shouldRemove:=>
 		kaporCaughtTime!=nil or @deathTime!=nil and getFrameLooped(.1,@deathFrames,@deathTime)
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-6,y-6),
-			Vector(x+6,y+8))
+		makeRectangle(x-6,y-6,x+6,y+8)
 	getTileId:(layer)=>
 		switch layer
 			when 1
@@ -2345,9 +2262,7 @@ class Hilda extends Enemy
 	shouldRemove:=>
 		@deathTime!=nil and getFrameLooped(.1,@deathFrames,@deathTime)
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-9,y-9),
-			Vector(x+9,y+12))
+		makeRectangle(x-9,y-9,x+9,y+12)
 	getTileId:(layer)=>
 		switch layer
 			when 1
@@ -2535,9 +2450,7 @@ class Todor extends Sprite
 				return result-7
 		return result
 	getRectangle:(x=@x,y=@y)=>
-		Rectangle(
-			Vector(x-3,y-3),
-			Vector(x+3,y+4))
+		makeRectangle(x-3,y-3,x+3,y+4)
 	canMove:(x,y)=>
 		not rectangleHitsWall(@getRectangle(x,y))
 	move:=>
@@ -2692,12 +2605,10 @@ TIC=->
 		scoreToPrint="#{score}"
 		w=print(scoreToPrint,cam.width,cam.height,0,true,2)
 		print(scoreToPrint,cam.width-w-8,cam.height-2*8,15,true,2)
-		if todor.isLavaProofStart!=nil
-			spr(73,cam.width - 16,8,0)
-		if todor.isMightyStart!=nil
-			spr(74,cam.width - 24,8,0)
 		if not killedAnyone
 			spr(350,8,8,0)
+toPercent=(n)->
+	leftPad("#{round(100*n)}%",4)
 OVR=->
 	setPalette(defaultPalette)
 	if coverSkipped and startTime==nil
